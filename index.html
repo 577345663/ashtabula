@@ -6,13 +6,7 @@
 <title>Ashtabula</title>
 
 <style>
-body{
-  margin:0;
-  font-family:-apple-system,system-ui,sans-serif;
-  background:linear-gradient(#e6f0ff,#f8fbff);
-  display:flex;
-  justify-content:center;
-}
+body{margin:0;font-family:-apple-system,system-ui,sans-serif;background:linear-gradient(#e6f0ff,#f8fbff);display:flex;justify-content:center}
 .app{max-width:520px;width:100%}
 
 .top{padding:16px;display:flex;gap:8px}
@@ -20,64 +14,67 @@ body{
 .btn{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:12px;border:none;background:#1e4f8a;color:#fff}
 
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px}
-.tile{position:relative;height:110px;border-radius:16px;overflow:hidden;background-size:cover}
+.tile{position:relative;height:110px;border-radius:16px;overflow:hidden;background-size:cover;background-position:center}
 .tile::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.35),rgba(0,0,0,.05))}
 .label{position:absolute;bottom:10px;left:0;right:0;text-align:center;color:#fff;font-weight:700;z-index:2}
 
 .list{padding:16px}
 
-/* 🔥 BIZ CARDS */
-.item{
-  border-radius:14px;
-  padding:12px;
-  margin-bottom:10px;
-  border:1px solid rgba(0,0,0,0.08);
-}
-.item.alt1{ background:rgba(30,79,138,0.08); }
-.item.alt2{ background:rgba(255,165,0,0.10); }
-.item.alt3{ background:rgba(60,180,75,0.10); }
+/* BIZ CARDS */
+.item{border-radius:14px;padding:12px;margin-bottom:10px;border:1px solid rgba(0,0,0,0.08)}
+.item.alt1{background:rgba(30,79,138,0.08)}
+.item.alt2{background:rgba(255,165,0,0.10)}
+.item.alt3{background:rgba(60,180,75,0.10)}
 
 .toprow{display:flex;justify-content:space-between;font-weight:600}
 .addr,.web{font-size:13px;margin-top:4px;word-break:break-all}
 
-/* MODAL */
-.modal{
+/* MODAL (shared) */
+.modal{position:fixed;inset:0;background:#000000cc;display:none;justify-content:center;align-items:flex-end}
+.panel{background:#fff;width:100%;max-width:520px;border-radius:20px 20px 0 0;padding:20px;color:#000;position:relative}
+.closeX{position:absolute;top:10px;right:14px;font-size:18px;cursor:pointer}
+
+.zipGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.zipItem{background:#f2f2f2;padding:6px;border-radius:8px;font-size:13px}
+
+/* SPLASH */
+.splash{
   position:fixed;
   inset:0;
-  background:#000000cc;
   display:none;
   justify-content:center;
-  align-items:flex-end;
+  align-items:center;
+  background:#000;
+  z-index:999;
 }
-.panel{
-  background:#fff;
+.splashInner{
   width:100%;
   max-width:520px;
-  border-radius:20px 20px 0 0;
-  padding:20px;
-  color:#000;
+  height:100%;
+  background:url('images/splash.png') center/cover no-repeat;
   position:relative;
 }
-.closeX{
+.splashInner::after{
+  content:"";
   position:absolute;
-  top:10px;
-  right:14px;
-  font-size:18px;
-  cursor:pointer;
+  inset:0;
+  background:linear-gradient(to bottom, rgba(0,0,0,.2), rgba(0,0,0,.6));
 }
-
-.zipGrid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-top:10px;
+.splashContent{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+  text-align:center;
+  padding:20px;
+  z-index:2;
 }
-.zipItem{
-  background:#f2f2f2;
-  padding:6px;
-  border-radius:8px;
-  font-size:13px;
-}
+.splashTitle{font-size:28px;font-weight:800;margin-bottom:10px}
+.splashText{font-size:14px;opacity:.9}
+.splashNote{margin-top:20px;font-size:12px;opacity:.7}
 
 .footer{padding:40px 16px 20px;text-align:center;font-size:11px;color:#666}
 </style>
@@ -94,7 +91,6 @@ body{
 </div>
 
 <div id="content"></div>
-
 <div class="footer">© 2026 ashtabula.info</div>
 
 </div>
@@ -103,23 +99,41 @@ body{
 <div id="options" class="modal" onclick="toggleOptions()">
   <div class="panel" onclick="event.stopPropagation()">
     <div class="closeX" onclick="toggleOptions()">✕</div>
-
     <b>Zip Codes</b>
-
     <div id="zipBox" class="zipGrid"></div>
-
     <br>
     <button onclick="checkAll()">Check All</button>
     <button onclick="clearAll()">Uncheck All</button>
-
     <br><br>
-    <label>
-      <input id="surrounding" type="checkbox"> Include surrounding counties
-    </label>
+    <label><input id="surrounding" type="checkbox"> Include surrounding counties</label>
+  </div>
+</div>
+
+<!-- SPLASH -->
+<div id="splash" class="splash" onclick="closeSplash()">
+  <div class="splashInner">
+    <div class="splashContent">
+      <div class="splashTitle">ASHTABULA.INFO</div>
+      <div class="splashText">Find food, services, and local places across Ashtabula County.</div>
+      <div class="splashNote">(tap anywhere to continue)</div>
+    </div>
   </div>
 </div>
 
 <script>
+
+/* SPLASH LOGIC */
+function showSplash(){
+  let last = localStorage.getItem("splashTime");
+  let now = Date.now();
+  if(!last || (now - last) > 9999*1000){
+    splash.style.display="flex";
+    localStorage.setItem("splashTime", now);
+  }
+}
+function closeSplash(){
+  splash.style.display="none";
+}
 
 /* MAP */
 function mapLink(addr){
@@ -135,7 +149,6 @@ const zips=[
 "44082","44084","44085","44093",
 "44057","44077","44060","44094"
 ];
-
 let activeZips=[...zips];
 
 function buildZipUI(){
@@ -145,61 +158,97 @@ function buildZipUI(){
     </label>
   `).join("");
 }
-
 function updateZips(){
   activeZips=[...document.querySelectorAll('#zipBox input:checked')].map(x=>x.value);
 }
-function checkAll(){
-  document.querySelectorAll('#zipBox input').forEach(x=>x.checked=true);
-  updateZips();
-}
-function clearAll(){
-  document.querySelectorAll('#zipBox input').forEach(x=>x.checked=false);
-  updateZips();
-}
+function checkAll(){document.querySelectorAll('#zipBox input').forEach(x=>x.checked=true);updateZips();}
+function clearAll(){document.querySelectorAll('#zipBox input').forEach(x=>x.checked=false);updateZips();}
 
 /* DATA */
 function makePlace(n,c,s,z,co){
-  return{
-    n,c,s,z,co,
-    p:"440-997-9341",
-    a:`123 Main St, OH ${z}`,
-    w:"https://google.com"
-  };
+  return{n,c,s,z,co,p:"440-997-9341",a:`123 Main St, OH ${z}`,w:"https://google.com"};
 }
 
 const places=[
+
+/* FOOD (full coverage) */
 makePlace("Pizza Spot","food","pizza","44004","Ashtabula"),
+makePlace("Slice House","food","pizza","44005","Ashtabula"),
 makePlace("Burger Joint","food","fastfood","44005","Ashtabula"),
+makePlace("Quick Bites","food","fastfood","44057","Lake"),
 makePlace("Dining House","food","dining","44041","Ashtabula"),
+makePlace("Lakeview Dining","food","dining","44060","Lake"),
 makePlace("Bar Lounge","food","bars","44004","Ashtabula"),
+makePlace("Night Tap","food","bars","44077","Lake"),
 makePlace("Coffee Cafe","food","coffee","44030","Ashtabula"),
+makePlace("Harbor Coffee","food","coffee","44004","Ashtabula"),
 makePlace("Bakery Shop","food","bakery","44004","Ashtabula"),
+makePlace("Sweet Crumbs","food","bakery","44076","Ashtabula"),
 makePlace("Asian Kitchen","food","asian","44004","Ashtabula"),
 makePlace("Seafood Shack","food","seafood","44041","Ashtabula"),
 makePlace("Winery House","food","wineries","44030","Ashtabula"),
 
+/* AUTO */
 makePlace("Repair Garage","auto","repairs","44004","Ashtabula"),
+makePlace("Fix Auto","auto","repairs","44047","Ashtabula"),
 makePlace("Car Dealer","auto","sales","44041","Ashtabula"),
+makePlace("Auto Plaza","auto","sales","44005","Ashtabula"),
 makePlace("Car Wash","auto","wash","44005","Ashtabula"),
+makePlace("Quick Wash","auto","wash","44057","Lake"),
 
+/* OTHERS (3+ each) */
 makePlace("Fuel One","gas",null,"44004","Ashtabula"),
 makePlace("Fuel Two","gas",null,"44057","Lake"),
+makePlace("Fuel Stop","gas",null,"44005","Ashtabula"),
 
 makePlace("Market One","grocery",null,"44004","Ashtabula"),
 makePlace("Market Two","grocery",null,"44077","Lake"),
+makePlace("Fresh Foods","grocery",null,"44005","Ashtabula"),
 
 makePlace("Clinic","health",null,"44004","Ashtabula"),
+makePlace("Wellness","health",null,"44005","Ashtabula"),
+makePlace("Urgent Care","health",null,"44060","Lake"),
+
 makePlace("Bank","banks",null,"44004","Ashtabula"),
+makePlace("Finance Center","banks",null,"44005","Ashtabula"),
+makePlace("Credit Union","banks",null,"44057","Lake"),
+
 makePlace("City Hall","civic",null,"44004","Ashtabula"),
+makePlace("Library","civic",null,"44005","Ashtabula"),
+makePlace("Court House","civic",null,"44047","Ashtabula"),
+
 makePlace("Water Dept","utilities",null,"44004","Ashtabula"),
+makePlace("Power Office","utilities",null,"44005","Ashtabula"),
+makePlace("Service Center","utilities",null,"44057","Lake"),
+
 makePlace("Trail","outdoors",null,"44004","Ashtabula"),
+makePlace("Park","outdoors",null,"44005","Ashtabula"),
+makePlace("Nature Path","outdoors",null,"44060","Lake"),
+
 makePlace("Lighthouse","attractions",null,"44004","Ashtabula"),
+makePlace("Museum","attractions",null,"44005","Ashtabula"),
+makePlace("Harbor View","attractions",null,"44057","Lake"),
+
 makePlace("Hotel","lodging",null,"44004","Ashtabula"),
+makePlace("Inn","lodging",null,"44005","Ashtabula"),
+makePlace("Suites","lodging",null,"44060","Lake"),
+
 makePlace("Pet Clinic","pets",null,"44004","Ashtabula"),
+makePlace("Vet Care","pets",null,"44005","Ashtabula"),
+makePlace("Pet Groom","pets",null,"44057","Lake"),
+
 makePlace("Services","services",null,"44004","Ashtabula"),
+makePlace("Repair Service","services",null,"44005","Ashtabula"),
+makePlace("Pro Services","services",null,"44060","Lake"),
+
 makePlace("Shopping","shopping",null,"44004","Ashtabula"),
-makePlace("Other","other",null,"44004","Ashtabula")
+makePlace("Mall","shopping",null,"44005","Ashtabula"),
+makePlace("Outlet","shopping",null,"44057","Lake"),
+
+makePlace("Other","other",null,"44004","Ashtabula"),
+makePlace("Misc Place","other",null,"44005","Ashtabula"),
+makePlace("Random Spot","other",null,"44060","Lake")
+
 ];
 
 /* STRUCTURE */
@@ -291,8 +340,10 @@ options.style.display=open?"none":"flex";
 open=!open;
 }
 
+/* INIT */
 buildZipUI();
 renderHome();
+showSplash();
 
 </script>
 
