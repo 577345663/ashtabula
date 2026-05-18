@@ -3,99 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ashtabula County & Surrounding Areas</title>
+<title>Ashtabula Co.</title>
 
 <style>
-body{margin:0;font-family:-apple-system,system-ui,sans-serif;background:linear-gradient(#e6f0ff,#f8fbff);display:flex;justify-content:center}
+body{margin:0;font-family:-apple-system,system-ui;background:linear-gradient(#e6f0ff,#f8fbff);display:flex;justify-content:center}
 .app{max-width:520px;width:100%}
 
 .top{padding:16px;display:flex;gap:8px}
 .search{flex:1;padding:12px;border-radius:14px;border:none}
-.btn{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:12px;border:none;background:#1e4f8a;color:#fff}
+.btn{width:44px;height:44px;border-radius:12px;border:none;background:#1e4f8a;color:#fff}
 
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px}
-.tile{position:relative;height:110px;border-radius:16px;overflow:hidden;background-size:cover;background-position:center}
+.tile{position:relative;height:110px;border-radius:16px;overflow:hidden;background-size:cover}
 .tile::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.35),rgba(0,0,0,.05))}
-.label{position:absolute;bottom:10px;left:0;right:0;text-align:center;color:#fff;font-weight:700;z-index:2}
+.label{position:absolute;bottom:10px;width:100%;text-align:center;color:#fff;font-weight:700}
 
 .list{padding:16px}
 
-/* BIZ CARDS */
-.item{border-radius:14px;padding:12px;margin-bottom:10px;border:1px solid rgba(0,0,0,0.08)}
-.item.alt1{background:rgba(30,79,138,0.08)}
-.item.alt2{background:rgba(255,165,0,0.10)}
-.item.alt3{background:rgba(60,180,75,0.10)}
-.item.announce{background:rgba(255,215,0,0.15)}
+/* cards */
+.item{border-radius:14px;padding:12px;margin-bottom:10px;border:1px solid rgba(0,0,0,.08)}
+.alt1{background:rgba(30,79,138,.08)}
+.alt2{background:rgba(255,165,0,.1)}
+.alt3{background:rgba(60,180,75,.1)}
+.announce{background:rgba(255,215,0,.15)}
 
 .toprow{display:flex;justify-content:space-between;font-weight:600}
-.addr,.web{font-size:13px;margin-top:4px;word-break:break-all}
+.addr,.web{font-size:13px;margin-top:4px}
 
-/* MODAL */
-.modal{
-  position:fixed;
-  inset:0;
-  background:#000000cc;
-  display:none;
-  justify-content:center;
-  align-items:flex-end;
+/* modal fix */
+.modal{position:fixed;inset:0;background:#000c;display:none;justify-content:center;align-items:flex-end;transform:translateZ(0);isolation:isolate}
+.panel{background:#fff;width:100%;max-width:520px;border-radius:20px 20px 0 0;padding:20px;-webkit-text-fill-color:#000}
+.panel *{-webkit-text-fill-color:#000}
 
-  transform:translateZ(0);
-  will-change:transform;
-  isolation:isolate;
-}
-.panel{
-  background:#fff;
-  width:100%;
-  max-width:520px;
-  border-radius:20px 20px 0 0;
-  padding:20px;
-  color:#000;
-  position:relative;
+.zipGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 
-  backface-visibility:hidden;
-}
-.panel, .panel *{
-  -webkit-text-fill-color:#000;
-  opacity:1 !important;
-}
-
-.closeX{position:absolute;top:10px;right:14px;font-size:18px;cursor:pointer}
-
-.zipGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
-.zipItem{background:#f2f2f2;padding:6px;border-radius:8px;font-size:13px}
-
-/* SPLASH */
-.splash{position:fixed;inset:0;display:none;justify-content:center;align-items:center;background:#000;z-index:999}
-.splashInner{
-  width:100%;
-  max-width:520px;
-  height:100%;
-  background:url('images/splash.jpg') center/cover no-repeat;
-  position:relative;
-}
-.splashInner::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to bottom, rgba(0,0,0,.2), rgba(0,0,0,.6));
-}
-.splashContent{
-  position:absolute;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  color:#fff;
-  text-align:center;
-  padding:20px;
-  z-index:2;
-}
-.splashTitle{font-size:28px;font-weight:800;margin-bottom:10px}
-.splashText{font-size:14px;opacity:.9}
-.splashNote{margin-top:20px;font-size:12px;opacity:.7}
-
-.footer{padding:40px 16px 20px;text-align:center;font-size:11px;color:#666}
+.splash{position:fixed;inset:0;background:#000;display:none;z-index:999}
+.splashInner{height:100%;background:url('images/splash.jpg') center/cover}
+.splashContent{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff}
 </style>
 </head>
 
@@ -104,146 +48,117 @@ body{margin:0;font-family:-apple-system,system-ui,sans-serif;background:linear-g
 <div class="app">
 
 <div class="top">
-  <input id="search" class="search" placeholder="Search ashtabula.info">
-  <button class="btn" onclick="renderHome()">🏠</button>
-  <button class="btn" onclick="toggleOptions()">⚙</button>
+<input id="search" class="search" placeholder="Search ashtabula.info">
+<button class="btn" onclick="renderHome()">🏠</button>
+<button class="btn" onclick="toggleOptions()">⚙</button>
 </div>
 
 <div id="content"></div>
-<div class="footer">© 2026 ashtabula.info</div>
 
 </div>
 
-<div id="options" class="modal" onclick="toggleOptions()">
-  <div class="panel" onclick="event.stopPropagation()">
-    <div class="closeX" onclick="toggleOptions()">✕</div>
-    <b>Zip Codes</b>
-    <div id="zipBox" class="zipGrid"></div>
-    <br>
-    <button onclick="checkAll()">Check All</button>
-    <button onclick="clearAll()">Uncheck All</button>
-    <br><br>
-    <label><input id="surrounding" type="checkbox"> Include surrounding counties</label>
-  </div>
+<div id="options" class="modal">
+<div class="panel">
+<b>Zip Codes</b>
+<div id="zipBox" class="zipGrid"></div>
+</div>
 </div>
 
-<div id="splash" class="splash" onclick="closeSplash()">
-  <div class="splashInner">
-    <div class="splashContent">
-      <div class="splashTitle">ASHTABULA.INFO</div>
-      <div class="splashText">Find food, services, and local places across Ashtabula County.</div>
-      <div class="splashNote">(tap anywhere to continue)</div>
-    </div>
-  </div>
+<div id="splash" class="splash" onclick="this.style.display='none'">
+<div class="splashInner"></div>
+<div class="splashContent">
+<h2>Ashtabula.info</h2>
+<p>Directory & Lookup</p>
+</div>
 </div>
 
 <script>
 
-/* SPLASH */
-function showSplash(){
-  let last = localStorage.getItem("splashTime");
-  let now = Date.now();
-  if(!last || (now - last) > 9999*1000){
-    splash.style.display="flex";
-    localStorage.setItem("splashTime", now);
-  }
-}
-function closeSplash(){splash.style.display="none";}
-
-/* MAP */
-function mapLink(addr){
-  return /iPhone|iPad|iPod/i.test(navigator.userAgent)
-    ? `http://maps.apple.com/?q=${encodeURIComponent(addr)}`
-    : `https://maps.google.com/?q=${encodeURIComponent(addr)}`;
-}
-
-/* ZIPS */
-const zips=["44004","44005","44041","44057","44077"];
-let activeZips=[...zips];
-
-function buildZipUI(){
-  zipBox.innerHTML=zips.map(z=>`
-    <label class="zipItem">
-      <input type="checkbox" value="${z}" checked onchange="updateZips()"> ${z}
-    </label>
-  `).join("");
-}
-function updateZips(){
-  activeZips=[...document.querySelectorAll('#zipBox input:checked')].map(x=>x.value);
-}
-function checkAll(){document.querySelectorAll('#zipBox input').forEach(x=>x.checked=true);updateZips();}
-function clearAll(){document.querySelectorAll('#zipBox input').forEach(x=>x.checked=false);updateZips();}
-
-/* DATA */
+/* data */
 const places=[
-{type:"announcement",c:"food",active:true,text:"Try our new pizza specials this week!"},
+{type:"announcement",c:"food",s:"pizza",active:true,text:"Free slice today!"},
 
-{n:"Pizza Spot",c:"food",s:"pizza",z:"44004",co:"Ashtabula",featured:true},
-{n:"Burger Joint",c:"food",s:"fastfood",z:"44005",co:"Ashtabula",featured:false},
-{n:"Coffee Cafe",c:"food",s:"coffee",z:"44057",co:"Lake",featured:true},
+{n:"Pizza Spot",c:"food",s:"pizza",featured:true},
+{n:"Slice House",c:"food",s:"pizza",featured:false},
 
-{n:"Fuel One",c:"gas",z:"44004",co:"Ashtabula",featured:false},
-{n:"Fuel Two",c:"gas",z:"44057",co:"Lake",featured:true},
+{n:"Burger Joint",c:"food",s:"fastfood"},
+{n:"Quick Bites",c:"food",s:"fastfood"},
 
-{type:"announcement",c:"gas",active:true,text:"Fuel discount this weekend!"}
-].map(p=>{
-  if(p.type==="announcement") return p;
-  return {...p,p:"440-997-9341",a:`123 Main St, OH ${p.z}`,w:"https://google.com"};
-});
+{n:"Repair Garage",c:"auto",s:"repairs"},
+{n:"Car Dealer",c:"auto",s:"sales"}
+].map(x=>({...x,p:"440-000-0000",a:"123 Main",w:"https://google.com"}))
 
-/* FILTER */
-function passFilters(p){
-  let inZip=activeZips.includes(p.z);
-  let includeSur=document.getElementById("surrounding").checked;
-  if(p.co!=="Ashtabula" && !includeSur) return false;
-  return inZip;
+/* structure */
+const cats=[
+["Food","food"],["Fuel","gas"],["Grocery","grocery"],
+["Outdoors","outdoors"],["Sights","attractions"],
+["Lodging","lodging"],["Auto","auto"],["Shopping","shopping"],
+["Services","services"],["Banks","banks"],["Health","health"],
+["Pets","pets"],["Civic","civic"],["Utilities","utilities"],["Other","other"]
+]
+
+const foodSubs=["pizza","fastfood","dining","bars","coffee","bakery","asian","seafood","wineries"]
+const autoSubs=["sales","repairs","wash"]
+
+/* home */
+function renderHome(){
+content.innerHTML=`<div class="grid">${
+cats.map(c=>`
+<div class="tile" onclick="openCat('${c[1]}')" style="background-image:url('images/categories/${c[1]}.jpg')">
+<div class="label">${c[0]}</div></div>`).join("")}</div>`
 }
 
-/* LIST */
-function openList(cat){
-let data=places.filter(p=>p.c===cat);
+/* category */
+function openCat(cat){
+if(cat==="food"){
+content.innerHTML=subGrid("food",foodSubs)
+return
+}
+if(cat==="auto"){
+content.innerHTML=subGrid("auto",autoSubs)
+return
+}
+openList(cat)
+}
 
-let announce=data.find(p=>p.type==="announcement" && p.active);
-let featured=data.filter(p=>p.featured).sort((a,b)=>a.n.localeCompare(b.n));
-let normal=data.filter(p=>!p.featured);
+/* sub grid */
+function subGrid(cat,subs){
+return `<div class="grid">${
+subs.map(s=>`
+<div class="tile" onclick="openList('${cat}','${s}')" style="background-image:url('images/${cat}/${s}.jpg')">
+<div class="label">${cap(s)}</div></div>`).join("")}</div>`
+}
 
-let final=[
-  ...(announce?[announce]:[]),
-  ...featured,
-  ...normal
-];
+/* list */
+function openList(cat,sub){
+let data=places.filter(p=>p.c===cat && (!sub||p.s===sub))
+
+let announce=data.find(p=>p.type==="announcement"&&p.active)
+let featured=data.filter(p=>p.featured).sort((a,b)=>a.n.localeCompare(b.n))
+let normal=data.filter(p=>!p.featured)
+
+let final=[...(announce?[announce]:[]),...featured,...normal]
 
 content.innerHTML=`<div class="list">
+${sub?`<button onclick="openCat('${cat}')">Back</button>`:""}
 ${final.map((d,i)=>{
 if(d.type==="announcement"){
-return `<div class="item announce">📣 Announcement<br>${d.text}</div>`;
+return `<div class="item announce">📣 ${d.text}</div>`
 }
-return `
-<div class="item alt${(i%3)+1}">
-<div class="toprow">
-<div>${d.n}${d.featured?" ⭐":""}</div>
-<div><a href="tel:${d.p}">${d.p}</a></div>
-</div>
-<div class="addr"><a href="${mapLink(d.a)}">${d.a}</a></div>
-<div class="web"><a href="${d.w}" target="_blank">${d.w}</a></div>
-</div>`;
+return `<div class="item alt${(i%3)+1}">
+<div class="toprow"><div>${d.n}${d.featured?" ⭐":""}</div><div>${d.p}</div></div>
+<div class="addr">${d.a}</div>
+<div class="web">${d.w}</div>
+</div>`
 }).join("")}
-</div>`;
+</div>`
 }
 
-/* HOME */
-function renderHome(){
-content.innerHTML=`<div class="grid">
-<div class="tile" onclick="openList('food')" style="background-image:url('images/categories/food.jpg')"><div class="label">Food</div></div>
-<div class="tile" onclick="openList('gas')" style="background-image:url('images/categories/gas.jpg')"><div class="label">Fuel</div></div>
-</div>`;
-}
+/* helpers */
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
 
-function toggleOptions(){options.style.display=options.style.display==="flex"?"none":"flex"}
-
-buildZipUI();
-renderHome();
-showSplash();
+renderHome()
+splash.style.display="block"
 
 </script>
 
