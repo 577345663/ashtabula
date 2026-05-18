@@ -6,118 +6,33 @@
 <title>Ashtabula</title>
 
 <style>
-body{
-  margin:0;
-  font-family:-apple-system,system-ui,sans-serif;
-  background:linear-gradient(#e6f0ff,#f8fbff);
-  display:flex;
-  justify-content:center;
-}
-
+body{margin:0;font-family:-apple-system,system-ui,sans-serif;background:linear-gradient(#e6f0ff,#f8fbff);display:flex;justify-content:center}
 .app{max-width:520px;width:100%}
 
 /* TOP */
-.top{
-  padding:16px;
-  display:flex;
-  gap:8px;
-}
-
-.search{
-  flex:1;
-  padding:12px;
-  border-radius:14px;
-  border:none;
-}
-
-.btn{
-  width:44px;height:44px;
-  display:flex;align-items:center;justify-content:center;
-  border-radius:12px;border:none;
-  background:#1e4f8a;color:white;
-}
+.top{padding:16px;display:flex;gap:8px}
+.search{flex:1;padding:12px;border-radius:14px;border:none}
+.btn{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:12px;border:none;background:#1e4f8a;color:#fff}
 
 /* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  padding:16px;
-}
-
-.tile{
-  position:relative;
-  height:110px;
-  border-radius:16px;
-  overflow:hidden;
-  background-size:cover;
-}
-
-.tile::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.35), rgba(0,0,0,.05));
-}
-
-.label{
-  position:absolute;
-  bottom:10px;
-  left:0;right:0;
-  text-align:center;
-  color:#fff;
-  font-weight:700;
-  z-index:2;
-}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px}
+.tile{position:relative;height:110px;border-radius:16px;overflow:hidden;background-size:cover}
+.tile::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.35),rgba(0,0,0,.05))}
+.label{position:absolute;bottom:10px;left:0;right:0;text-align:center;color:#fff;font-weight:700;z-index:2}
 
 /* LIST */
 .list{padding:16px}
-
-.item{
-  background:#ffffffee;
-  border-radius:14px;
-  padding:12px;
-  margin-bottom:10px;
-}
-
-.toprow{
-  display:flex;
-  justify-content:space-between;
-  font-weight:600;
-}
-
-.addr,.web{
-  font-size:13px;
-  margin-top:4px;
-  word-break:break-all;
-}
+.item{background:#ffffffee;border-radius:14px;padding:12px;margin-bottom:10px}
+.toprow{display:flex;justify-content:space-between;font-weight:600}
+.addr,.web{font-size:13px;margin-top:4px;word-break:break-all}
 
 /* OPTIONS */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  display:none;
-  justify-content:center;
-  align-items:flex-end;
-}
-
-.panel{
-  background:#fff;
-  width:100%;
-  max-width:520px;
-  border-radius:20px 20px 0 0;
-  padding:20px;
-  color:#000;
-}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;justify-content:center;align-items:flex-end}
+.panel{background:#fff;width:100%;max-width:520px;border-radius:20px 20px 0 0;padding:20px;color:#000;position:relative}
+.closeX{position:absolute;top:10px;right:14px;font-size:18px;cursor:pointer}
 
 /* FOOTER */
-.footer{
-  padding:40px 16px 20px;
-  text-align:center;
-  font-size:11px;
-  color:#666;
-}
+.footer{padding:40px 16px 20px;text-align:center;font-size:11px;color:#666}
 </style>
 </head>
 
@@ -140,19 +55,20 @@ body{
 <!-- OPTIONS -->
 <div id="options" class="modal" onclick="toggleOptions()">
   <div class="panel" onclick="event.stopPropagation()">
-    <b>Options</b><br><br>
+    <div class="closeX" onclick="toggleOptions()">✕</div>
 
-    <div><b>Zip Filters (placeholder)</b></div>
-    <label><input type="checkbox" checked> 44004</label><br>
-    <label><input type="checkbox" checked> 44005</label><br>
-    <label><input type="checkbox" checked> 44030</label><br>
-    <label><input type="checkbox" checked> 44041</label><br>
+    <b>Zip Filters</b><br><br>
+
+    <div id="zipBox"></div>
 
     <br>
-    <label><input type="checkbox"> Include surrounding counties</label>
+    <button onclick="checkAll()">Check All</button>
+    <button onclick="clearAll()">Uncheck All</button>
 
     <br><br>
-    <button onclick="toggleOptions()">Close</button>
+    <label>
+      <input id="surrounding" type="checkbox"> Include surrounding counties
+    </label>
   </div>
 </div>
 
@@ -165,68 +81,60 @@ function mapLink(addr){
     : `https://maps.google.com/?q=${encodeURIComponent(addr)}`;
 }
 
-/* DATA */
-const basePhone="440-997-9341";
+/* ZIP CONFIG */
+const zips=["44004","44005","44030","44041","44047","44048","44057","44077"];
+let activeZips=[...zips];
 
-function makePlace(name,cat,sub,zip,county){
-  return {
-    n:name,
-    c:cat,
-    s:sub,
-    p:basePhone,
-    a:`123 Main St, OH ${zip}`,
-    w:`https://google.com`,
-    z:zip,
-    co:county
-  };
+/* BUILD ZIP UI */
+function buildZipUI(){
+  zipBox.innerHTML = zips.map(z=>`
+    <label>
+      <input type="checkbox" value="${z}" checked onchange="updateZips()"> ${z}
+    </label><br>
+  `).join("");
+}
+function updateZips(){
+  activeZips = [...document.querySelectorAll('#zipBox input:checked')].map(x=>x.value);
+}
+function checkAll(){
+  document.querySelectorAll('#zipBox input').forEach(x=>x.checked=true);
+  updateZips();
+}
+function clearAll(){
+  document.querySelectorAll('#zipBox input').forEach(x=>x.checked=false);
+  updateZips();
 }
 
-/* FULL TEST DATA */
+/* DATA */
 const places = [
+{n:"Pizza Spot",c:"food",s:"pizza",z:"44004",co:"Ashtabula"},
+{n:"Burger Joint",c:"food",s:"fastfood",z:"44005",co:"Ashtabula"},
+{n:"Seafood Shack",c:"food",s:"seafood",z:"44041",co:"Ashtabula"},
+{n:"Donut Shop",c:"food",s:"donuts",z:"44004",co:"Ashtabula"},
+{n:"Wine House",c:"food",s:"wineries",z:"44030",co:"Ashtabula"},
+{n:"Asian Kitchen",c:"food",s:"asian",z:"44004",co:"Ashtabula"},
 
-/* FOOD */
-makePlace("Pizza Spot","food","pizza","44004","Ashtabula"),
-makePlace("Burger Joint","food","fastfood","44005","Ashtabula"),
-makePlace("Seafood Shack","food","seafood","44041","Ashtabula"),
-makePlace("Donut Shop","food","donuts","44004","Ashtabula"),
-makePlace("Wine House","food","wineries","44030","Ashtabula"),
-makePlace("Asian Kitchen","food","asian","44004","Ashtabula"),
+{n:"Repair Garage",c:"auto",s:"repairs",z:"44004",co:"Ashtabula"},
+{n:"Car Dealer",c:"auto",s:"sales",z:"44041",co:"Ashtabula"},
+{n:"Car Wash",c:"auto",s:"wash",z:"44005",co:"Ashtabula"},
 
-/* AUTO */
-makePlace("Repair Garage","auto","repairs","44004","Ashtabula"),
-makePlace("Car Dealer","auto","sales","44041","Ashtabula"),
-makePlace("Car Wash","auto","wash","44005","Ashtabula"),
+{n:"Fuel One",c:"gas",z:"44004",co:"Ashtabula"},
+{n:"Fuel Two",c:"gas",z:"44057",co:"Lake"},
 
-/* ALL OTHER CATS */
-makePlace("Fuel One","gas",null,"44004","Ashtabula"),
-makePlace("Fuel Two","gas",null,"44057","Lake"),
+{n:"Market One",c:"grocery",z:"44004",co:"Ashtabula"},
+{n:"Market Two",c:"grocery",z:"44077",co:"Lake"},
 
-makePlace("Market One","grocery",null,"44004","Ashtabula"),
-makePlace("Market Two","grocery",null,"44077","Lake"),
-
-makePlace("Clinic One","health",null,"44004","Ashtabula"),
-makePlace("Clinic Two","health",null,"44005","Ashtabula"),
-
-makePlace("Bank One","banks",null,"44004","Ashtabula"),
-makePlace("Bank Two","banks",null,"44005","Ashtabula"),
-
-makePlace("City Hall","civic",null,"44004","Ashtabula"),
-makePlace("Water Dept","utilities",null,"44004","Ashtabula"),
-
-makePlace("Park Trail","outdoors",null,"44004","Ashtabula"),
-makePlace("Lighthouse","attractions",null,"44004","Ashtabula"),
-
-makePlace("Hotel One","lodging",null,"44004","Ashtabula"),
-
-makePlace("Pet Clinic","pets",null,"44004","Ashtabula"),
-
-makePlace("Fix Services","services",null,"44004","Ashtabula"),
-
-makePlace("Shop Center","shopping",null,"44004","Ashtabula"),
-
-makePlace("Other Listing","other",null,"44004","Ashtabula")
-
-];
+{n:"Clinic One",c:"health",z:"44004",co:"Ashtabula"},
+{n:"Bank One",c:"banks",z:"44004",co:"Ashtabula"},
+{n:"City Hall",c:"civic",z:"44004",co:"Ashtabula"},
+{n:"Water Dept",c:"utilities",z:"44004",co:"Ashtabula"},
+{n:"Park Trail",c:"outdoors",z:"44004",co:"Ashtabula"},
+{n:"Lighthouse",c:"attractions",z:"44004",co:"Ashtabula"},
+{n:"Hotel One",c:"lodging",z:"44004",co:"Ashtabula"},
+{n:"Pet Clinic",c:"pets",z:"44004",co:"Ashtabula"},
+{n:"Fix Services",c:"services",z:"44004",co:"Ashtabula"},
+{n:"Shop Center",c:"shopping",z:"44004",co:"Ashtabula"}
+].map(p=>({...p,p:"440-997-9341",a:`123 Main St, OH ${p.z}`,w:"https://google.com"}));
 
 /* STRUCTURE */
 const cats=[
@@ -237,8 +145,16 @@ const cats=[
 ["Pets","pets"],["Civic","civic"],["Utilities","utilities"],["Other","other"]
 ];
 
-const foodSubs=["asian","bars","desserts","dining","donuts","fastfood","pizza","seafood","wineries"];
-const autoSubs=["sales","repairs","wash"];
+const foodSubs=["Asian","Bars","Desserts","Dining","Donuts","Fastfood","Pizza","Seafood","Wineries"];
+const autoSubs=["Sales","Repairs","Wash"];
+
+/* FILTER */
+function passFilters(p){
+  let inZip = activeZips.includes(p.z);
+  let includeSur = document.getElementById("surrounding").checked;
+  if(p.co!=="Ashtabula" && !includeSur) return false;
+  return inZip;
+}
 
 /* HOME */
 function renderHome(){
@@ -256,8 +172,8 @@ function openCat(cat){
 if(cat==="food"){
 content.innerHTML=`<div class="grid">${
 foodSubs.map(s=>`
-<div class="tile" onclick="openList('food','${s}')"
-style="background-image:url('images/food/${s}.png')">
+<div class="tile" onclick="openList('food','${s.toLowerCase()}')"
+style="background-image:url('images/food/${s.toLowerCase()}.png')">
 <div class="label">${s}</div>
 </div>`).join("")}</div>`;
 return;
@@ -266,8 +182,8 @@ return;
 if(cat==="auto"){
 content.innerHTML=`<div class="grid">${
 autoSubs.map(s=>`
-<div class="tile" onclick="openList('auto','${s}')"
-style="background-image:url('images/autos/${s}.png')">
+<div class="tile" onclick="openList('auto','${s.toLowerCase()}')"
+style="background-image:url('images/autos/${s.toLowerCase()}.png')">
 <div class="label">${s}</div>
 </div>`).join("")}</div>`;
 return;
@@ -278,10 +194,10 @@ openList(cat);
 
 /* LIST */
 function openList(cat,sub){
-let data=places.filter(p=>sub?(p.c===cat&&p.s===sub):p.c===cat);
+let data=places.filter(p=>sub?(p.c===cat&&p.s===sub):p.c===cat).filter(passFilters);
 
 content.innerHTML=`<div class="list">
-<button onclick="renderHome()">Back</button>
+${sub?`<button onclick="openCat('${cat}')">Back</button>`:""}
 ${data.map(d=>`
 <div class="item">
 <div class="toprow">
@@ -298,13 +214,6 @@ ${data.map(d=>`
 </div>`;
 }
 
-/* SEARCH */
-search.oninput=()=>{
-let q=search.value.toLowerCase();
-let data=places.filter(p=>p.n.toLowerCase().includes(q));
-openList("",null,data);
-};
-
 /* OPTIONS */
 let open=false;
 function toggleOptions(){
@@ -312,6 +221,8 @@ options.style.display=open?"none":"flex";
 open=!open;
 }
 
+/* INIT */
+buildZipUI();
 renderHome();
 
 </script>
