@@ -1,1 +1,163 @@
-ashtabula.info
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ashtabula</title>
+
+<style>
+body{
+  margin:0;
+  font-family:-apple-system,system-ui,sans-serif;
+  background:linear-gradient(#e6f0ff,#f8fbff);
+  display:flex;
+  justify-content:center;
+}
+
+.app{
+  max-width:520px;
+  width:100%;
+}
+
+/* SEARCH */
+.searchRow{
+  padding:16px;
+  display:flex;
+  gap:10px;
+}
+
+.search{
+  flex:1;
+  padding:12px;
+  border-radius:14px;
+  border:none;
+  background:white;
+  font-size:15px;
+}
+
+.btn{
+  width:44px;
+  border-radius:12px;
+  border:none;
+  background:#1e4f8a;
+  color:white;
+  font-size:18px;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  padding:16px;
+}
+
+.tile{
+  position:relative;
+  height:110px;
+  border-radius:16px;
+  overflow:hidden;
+  background-size:cover;
+  background-position:center;
+}
+
+/* overlay */
+.tile::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.65), rgba(0,0,0,.2));
+}
+
+/* text */
+.label{
+  position:absolute;
+  bottom:10px;
+  left:10px;
+  right:10px;
+  color:white;
+  font-weight:700;
+  font-size:14px;
+  z-index:2;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="searchRow">
+  <input class="search" placeholder="Search at ashtabula.info">
+  <button class="btn">⚙</button>
+</div>
+
+<div class="grid">
+
+<div class="tile" style="background-image:url('images/categories/attractions.png')">
+  <div class="label">Attractions</div>
+</div>
+
+<div class="tile" style="background-image:url('images/categories/auto.png')">
+  <div class="label">Auto</div>
+</div>
+
+<div class="tile" style="background-image:url('images/categories/banks.png')">
+  <div class="label">Banks</div>
+</div>
+
+<div class="tile" style="background-image:url('images/categories/civic.png')">
+  <div class="label">Civic</div>
+</div>
+
+<div class="tile" style="background-image:url('images/categories/food.png')">
+  <div class="label">Food</div>
+</div>
+
+<div class="tile" style="background-image:url('images/categories/gas.png')">
+  <div class="label">Gas</div>
+</div>
+
+<div class="tile" style="background-image:url('images/categories/grocery.png')">
+  <div class="label">Grocery</div>
+</div>
+
+<div class="tile" style="background-image:url('images/categories/health.png')">
+  <div class="label">Health</div>
+</div>
+
+<div class="tile" style="background-image:url('images/categories/lodging.png')">
+  <div class="label">Lodging</div>
+</div>
+
+<div class="tile" style="background-image:url('images/categories/other.png')">
+  <div class="label">Other</div>
+</div>
+
+<div class="tile" style="background-image:url('images/categories/outdoors.png')">
+  <div class="label">Outdoors</div>
+</div>
+
+<div class="tile" style="background-image:url('images/categories/pets.png')">
+  <div class="label">Pets</div>
+</div>
+
+<div class="tile" style="background-image:url('images/categories/services.png')">
+  <div class="label">Services</div>
+</div>
+
+<div class="tile" style="background-image:url('images/categories/shopping.png')">
+  <div class="label">Shopping</div>
+</div>
+
+<div class="tile" style="background-image:url('images/categories/utilities.png')">
+  <div class="label">Utilities</div>
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
