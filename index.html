@@ -32,16 +32,18 @@ body{
   border-radius:14px;
   border:none;
   background:white;
-  font-size:15px;
 }
 
 .btn{
   width:44px;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   border-radius:12px;
   border:none;
   background:#1e4f8a;
   color:white;
-  font-size:18px;
 }
 
 /* GRID */
@@ -61,26 +63,58 @@ body{
   background-position:center;
 }
 
-/* overlay */
 .tile::after{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.65), rgba(0,0,0,.2));
+  background:linear-gradient(to top, rgba(0,0,0,.45), rgba(0,0,0,.1));
 }
 
-/* text */
 .label{
   position:absolute;
   bottom:10px;
-  left:10px;
-  right:10px;
+  left:0;
+  right:0;
+  text-align:center;
   color:white;
   font-weight:700;
-  font-size:14px;
-  z-index:2;
 }
 
+/* LIST */
+.list{
+  padding:16px;
+}
+
+.item{
+  background:#ffffffcc;
+  border-radius:14px;
+  padding:12px;
+  margin-bottom:10px;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  font-weight:600;
+}
+
+.addr,.web{
+  font-size:13px;
+  margin-top:4px;
+}
+
+a{
+  color:#1e4f8a;
+  text-decoration:none;
+}
+
+/* FOOTER */
+.footer{
+  padding:40px 16px 20px;
+  text-align:center;
+  font-size:11px;
+  color:#666;
+}
 </style>
 </head>
 
@@ -89,75 +123,118 @@ body{
 <div class="app">
 
 <div class="searchRow">
-  <input class="search" placeholder="Search at ashtabula.info">
-  <button class="btn">⚙</button>
+  <input id="search" class="search" placeholder="Search ashtabula.info">
+  <button class="btn" onclick="renderHome()">⌂</button>
 </div>
 
+<div id="content"></div>
+
+<div class="footer">© 2026 ashtabula.info</div>
+
+</div>
+
+<script>
+
+/* REAL TEST DATA BASE */
+const baseAddress = "4335 Park Ave, Ashtabula, OH 44004"; // Public Library
+const basePhone = "440-997-9341"; // Public Library
+const baseWeb = "https://www.ashtabulalibrary.org";
+
+/* CATEGORIES */
+const categories = [
+["Food","food"],["Fuel","gas"],["Grocery","grocery"],
+["Outdoors","outdoors"],["Attractions","attractions"],
+["Lodging","lodging"],["Auto","auto"],["Shopping","shopping"],
+["Services","services"],["Banks","banks"],["Health","health"],
+["Pets","pets"],["Civic","civic"],["Utilities","utilities"],["Other","other"]
+];
+
+/* TEST PLACES */
+const places = [
+{n:"Harbor Slice Co",c:"food"},
+{n:"Dockside Pizza",c:"food"},
+{n:"Sunrise Donuts",c:"food"},
+{n:"Quick Fuel Station",c:"gas"},
+{n:"Lakeside Market",c:"grocery"},
+{n:"State Park Trail",c:"outdoors"},
+{n:"Harbor Lighthouse",c:"attractions"},
+{n:"Lakeview Inn",c:"lodging"},
+{n:"City Auto Repair",c:"auto"},
+{n:"Main Street Shops",c:"shopping"},
+{n:"Fix-It Services",c:"services"},
+{n:"Community Bank",c:"banks"},
+{n:"Urgent Care Center",c:"health"},
+{n:"Happy Paws Vet",c:"pets"},
+{n:"City Hall",c:"civic"},
+{n:"Water Dept",c:"utilities"},
+{n:"Random Listing",c:"other"}
+].map(p => ({
+...p,
+p: basePhone,
+a: baseAddress,
+w: baseWeb
+}));
+
+/* HOME */
+function renderHome(){
+content.innerHTML = `
 <div class="grid">
+${categories.map(c=>`
+<div class="tile" onclick="openCategory('${c[1]}')"
+style="background-image:url('images/categories/${c[1]}.png')">
+<div class="label">${c[0]}</div>
+</div>`).join("")}
+</div>`;
+}
 
-<div class="tile" style="background-image:url('images/categories/attractions.png')">
-  <div class="label">Attractions</div>
-</div>
+/* CATEGORY VIEW */
+function openCategory(cat){
+let results = places.filter(p=>p.c===cat);
 
-<div class="tile" style="background-image:url('images/categories/auto.png')">
-  <div class="label">Auto</div>
+content.innerHTML = `
+<div class="list">
+<button onclick="renderHome()">Back</button>
+${results.map(r=>`
+<div class="item">
+<div class="top">
+<div>${r.n}</div>
+<div><a href="tel:${r.p}">${r.p}</a></div>
 </div>
+<div class="addr">
+<a href="https://maps.google.com/?q=${encodeURIComponent(r.a)}">${r.a}</a>
+</div>
+<div class="web">
+<a href="${r.w}" target="_blank">${r.w}</a>
+</div>
+</div>
+`).join("")}
+</div>`;
+}
 
-<div class="tile" style="background-image:url('images/categories/banks.png')">
-  <div class="label">Banks</div>
-</div>
+/* SEARCH */
+search.oninput = ()=>{
+let q = search.value.toLowerCase();
+let results = places.filter(p=>p.n.toLowerCase().includes(q));
 
-<div class="tile" style="background-image:url('images/categories/civic.png')">
-  <div class="label">Civic</div>
+content.innerHTML = `
+<div class="list">
+${results.map(r=>`
+<div class="item">
+<div class="top">
+<div>${r.n}</div>
+<div><a href="tel:${r.p}">${r.p}</a></div>
 </div>
+<div class="addr">
+<a href="https://maps.google.com/?q=${encodeURIComponent(r.a)}">${r.a}</a>
+</div>
+</div>
+`).join("")}
+</div>`;
+};
 
-<div class="tile" style="background-image:url('images/categories/food.png')">
-  <div class="label">Food</div>
-</div>
+renderHome();
 
-<div class="tile" style="background-image:url('images/categories/gas.png')">
-  <div class="label">Gas</div>
-</div>
-
-<div class="tile" style="background-image:url('images/categories/grocery.png')">
-  <div class="label">Grocery</div>
-</div>
-
-<div class="tile" style="background-image:url('images/categories/health.png')">
-  <div class="label">Health</div>
-</div>
-
-<div class="tile" style="background-image:url('images/categories/lodging.png')">
-  <div class="label">Lodging</div>
-</div>
-
-<div class="tile" style="background-image:url('images/categories/other.png')">
-  <div class="label">Other</div>
-</div>
-
-<div class="tile" style="background-image:url('images/categories/outdoors.png')">
-  <div class="label">Outdoors</div>
-</div>
-
-<div class="tile" style="background-image:url('images/categories/pets.png')">
-  <div class="label">Pets</div>
-</div>
-
-<div class="tile" style="background-image:url('images/categories/services.png')">
-  <div class="label">Services</div>
-</div>
-
-<div class="tile" style="background-image:url('images/categories/shopping.png')">
-  <div class="label">Shopping</div>
-</div>
-
-<div class="tile" style="background-image:url('images/categories/utilities.png')">
-  <div class="label">Utilities</div>
-</div>
-
-</div>
-
-</div>
+</script>
 
 </body>
 </html>
