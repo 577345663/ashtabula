@@ -14,16 +14,13 @@ body{
   justify-content:center;
 }
 
-.app{
-  max-width:520px;
-  width:100%;
-}
+.app{max-width:520px;width:100%}
 
-/* SEARCH */
-.searchRow{
+/* TOP BAR */
+.top{
   padding:16px;
   display:flex;
-  gap:10px;
+  gap:8px;
 }
 
 .search{
@@ -31,7 +28,6 @@ body{
   padding:12px;
   border-radius:14px;
   border:none;
-  background:white;
 }
 
 .btn{
@@ -44,6 +40,7 @@ body{
   border:none;
   background:#1e4f8a;
   color:white;
+  font-size:18px;
 }
 
 /* GRID */
@@ -60,14 +57,13 @@ body{
   border-radius:16px;
   overflow:hidden;
   background-size:cover;
-  background-position:center;
 }
 
 .tile::after{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.45), rgba(0,0,0,.1));
+  background:linear-gradient(to top, rgba(0,0,0,.35), rgba(0,0,0,.05));
 }
 
 .label{
@@ -76,44 +72,26 @@ body{
   left:0;
   right:0;
   text-align:center;
-  color:white;
+  color:#fff;
   font-weight:700;
+  z-index:2;
 }
 
-/* LIST */
-.list{
-  padding:16px;
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  display:none;
+  align-items:flex-end;
 }
 
-.item{
-  background:#ffffffcc;
-  border-radius:14px;
-  padding:12px;
-  margin-bottom:10px;
-}
-
-.top{
-  display:flex;
-  justify-content:space-between;
-  font-weight:600;
-}
-
-.addr,.web{
-  font-size:13px;
-  margin-top:4px;
-}
-
-a{
-  color:#1e4f8a;
-  text-decoration:none;
-}
-
-/* FOOTER */
-.footer{
-  padding:40px 16px 20px;
-  text-align:center;
-  font-size:11px;
-  color:#666;
+.panel{
+  background:white;
+  width:100%;
+  max-width:520px;
+  border-radius:20px 20px 0 0;
+  padding:20px;
 }
 </style>
 </head>
@@ -122,115 +100,94 @@ a{
 
 <div class="app">
 
-<div class="searchRow">
+<div class="top">
   <input id="search" class="search" placeholder="Search ashtabula.info">
-  <button class="btn" onclick="renderHome()">⌂</button>
+  <button class="btn" onclick="renderHome()">🏠</button>
+  <button class="btn" onclick="toggleOptions()">⚙</button>
 </div>
 
 <div id="content"></div>
 
-<div class="footer">© 2026 ashtabula.info</div>
+</div>
 
+<div id="options" class="modal">
+  <div class="panel">
+    Options panel (placeholder)
+  </div>
 </div>
 
 <script>
 
-/* REAL TEST DATA BASE */
-const baseAddress = "4335 Park Ave, Ashtabula, OH 44004"; // Public Library
-const basePhone = "440-997-9341"; // Public Library
-const baseWeb = "https://www.ashtabulalibrary.org";
-
-/* CATEGORIES */
-const categories = [
-["Food","food"],["Fuel","gas"],["Grocery","grocery"],
-["Outdoors","outdoors"],["Attractions","attractions"],
-["Lodging","lodging"],["Auto","auto"],["Shopping","shopping"],
-["Services","services"],["Banks","banks"],["Health","health"],
-["Pets","pets"],["Civic","civic"],["Utilities","utilities"],["Other","other"]
+/* MAIN */
+const cats = [
+["Food","food"],
+["Fuel","gas"],
+["Grocery","grocery"],
+["Outdoors","outdoors"],
+["Sights","attractions"],
+["Lodging","lodging"],
+["Auto","auto"],
+["Shopping","shopping"],
+["Services","services"],
+["Banks","banks"],
+["Health","health"],
+["Pets","pets"],
+["Civic","civic"],
+["Utilities","utilities"],
+["Other","other"]
 ];
 
-/* TEST PLACES */
-const places = [
-{n:"Harbor Slice Co",c:"food"},
-{n:"Dockside Pizza",c:"food"},
-{n:"Sunrise Donuts",c:"food"},
-{n:"Quick Fuel Station",c:"gas"},
-{n:"Lakeside Market",c:"grocery"},
-{n:"State Park Trail",c:"outdoors"},
-{n:"Harbor Lighthouse",c:"attractions"},
-{n:"Lakeview Inn",c:"lodging"},
-{n:"City Auto Repair",c:"auto"},
-{n:"Main Street Shops",c:"shopping"},
-{n:"Fix-It Services",c:"services"},
-{n:"Community Bank",c:"banks"},
-{n:"Urgent Care Center",c:"health"},
-{n:"Happy Paws Vet",c:"pets"},
-{n:"City Hall",c:"civic"},
-{n:"Water Dept",c:"utilities"},
-{n:"Random Listing",c:"other"}
-].map(p => ({
-...p,
-p: basePhone,
-a: baseAddress,
-w: baseWeb
-}));
+/* SUBS */
+const foodSubs = ["Asian","Bars","Desserts","Dining","Donuts","FastFood","Pizza","Seafood","Wineries"];
+const autoSubs = ["Sales","Repairs","Wash"];
 
 /* HOME */
 function renderHome(){
 content.innerHTML = `
 <div class="grid">
-${categories.map(c=>`
-<div class="tile" onclick="openCategory('${c[1]}')"
+${cats.map(c=>`
+<div class="tile" onclick="openCat('${c[1]}')"
 style="background-image:url('images/categories/${c[1]}.png')">
 <div class="label">${c[0]}</div>
 </div>`).join("")}
 </div>`;
 }
 
-/* CATEGORY VIEW */
-function openCategory(cat){
-let results = places.filter(p=>p.c===cat);
+/* CATEGORY */
+function openCat(cat){
 
+if(cat==="food"){
 content.innerHTML = `
-<div class="list">
-<button onclick="renderHome()">Back</button>
-${results.map(r=>`
-<div class="item">
-<div class="top">
-<div>${r.n}</div>
-<div><a href="tel:${r.p}">${r.p}</a></div>
-</div>
-<div class="addr">
-<a href="https://maps.google.com/?q=${encodeURIComponent(r.a)}">${r.a}</a>
-</div>
-<div class="web">
-<a href="${r.w}" target="_blank">${r.w}</a>
-</div>
-</div>
-`).join("")}
+<div class="grid">
+${foodSubs.map(s=>`
+<div class="tile"
+style="background-image:url('images/food/${s.toLowerCase()}.png')">
+<div class="label">${s}</div>
+</div>`).join("")}
 </div>`;
+return;
 }
 
-/* SEARCH */
-search.oninput = ()=>{
-let q = search.value.toLowerCase();
-let results = places.filter(p=>p.n.toLowerCase().includes(q));
-
+if(cat==="auto"){
 content.innerHTML = `
-<div class="list">
-${results.map(r=>`
-<div class="item">
-<div class="top">
-<div>${r.n}</div>
-<div><a href="tel:${r.p}">${r.p}</a></div>
-</div>
-<div class="addr">
-<a href="https://maps.google.com/?q=${encodeURIComponent(r.a)}">${r.a}</a>
-</div>
-</div>
-`).join("")}
+<div class="grid">
+${autoSubs.map(s=>`
+<div class="tile"
+style="background-image:url('images/auto/${s.toLowerCase()}.png')">
+<div class="label">${s}</div>
+</div>`).join("")}
 </div>`;
-};
+return;
+}
+
+}
+
+/* OPTIONS */
+let open=false;
+function toggleOptions(){
+options.style.display = open?"none":"flex";
+open=!open;
+}
 
 renderHome();
 
