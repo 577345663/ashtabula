@@ -19,8 +19,6 @@ body{margin:0;font-family:-apple-system,system-ui,sans-serif;background:linear-g
 .label{position:absolute;bottom:10px;left:0;right:0;text-align:center;color:#fff;font-weight:700;z-index:2}
 
 .list{padding:16px}
-
-/* BIZ CARDS */
 .item{border-radius:14px;padding:12px;margin-bottom:10px;border:1px solid rgba(0,0,0,0.08)}
 .item.alt1{background:rgba(30,79,138,0.08)}
 .item.alt2{background:rgba(255,165,0,0.10)}
@@ -29,46 +27,11 @@ body{margin:0;font-family:-apple-system,system-ui,sans-serif;background:linear-g
 .toprow{display:flex;justify-content:space-between;font-weight:600}
 .addr,.web{font-size:13px;margin-top:4px;word-break:break-all}
 
-/* MODAL */
 .modal{position:fixed;inset:0;background:#000000cc;display:none;justify-content:center;align-items:flex-end}
 .panel{background:#fff;width:100%;max-width:520px;border-radius:20px 20px 0 0;padding:20px;color:#000;position:relative}
-.closeX{position:absolute;top:10px;right:14px;font-size:18px;cursor:pointer}
 
-.zipGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
-.zipItem{background:#f2f2f2;padding:6px;border-radius:8px;font-size:13px}
-
-/* SPLASH */
 .splash{position:fixed;inset:0;display:none;justify-content:center;align-items:center;background:#000;z-index:999;}
-.splashInner{
-  width:100%;
-  max-width:520px;
-  height:100%;
-  background:url('images/splash.jpg') center/cover no-repeat;
-  position:relative;
-}
-.splashInner::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to bottom, rgba(0,0,0,.2), rgba(0,0,0,.6));
-}
-.splashContent{
-  position:absolute;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  color:#fff;
-  text-align:center;
-  padding:20px;
-  z-index:2;
-}
-.splashTitle{font-size:28px;font-weight:800;margin-bottom:10px}
-.splashText{font-size:14px;opacity:.9}
-.splashNote{margin-top:20px;font-size:12px;opacity:.7}
-
-.footer{padding:40px 16px 20px;text-align:center;font-size:11px;color:#666}
+.splashInner{width:100%;max-width:520px;height:100%;background:url('images/splash.jpg') center/cover no-repeat;}
 </style>
 </head>
 
@@ -77,88 +40,47 @@ body{margin:0;font-family:-apple-system,system-ui,sans-serif;background:linear-g
 <div class="app">
 
 <div class="top">
-  <input id="search" class="search" placeholder="Search ashtabula.info">
-  <button class="btn" onclick="renderHome()">🏠</button>
-  <button class="btn" onclick="toggleOptions()">⚙</button>
+<input id="search" class="search" placeholder="Search ashtabula.info">
+<button class="btn" onclick="renderHome()">🏠</button>
 </div>
 
 <div id="content"></div>
-<div class="footer">© 2026 ashtabula.info</div>
 
 </div>
 
-<div id="options" class="modal" onclick="toggleOptions()">
-  <div class="panel" onclick="event.stopPropagation()">
-    <div class="closeX" onclick="toggleOptions()">✕</div>
-    <b>Zip Codes</b>
-    <div id="zipBox" class="zipGrid"></div>
-    <br>
-    <button onclick="checkAll()">Check All</button>
-    <button onclick="clearAll()">Uncheck All</button>
-    <br><br>
-    <label><input id="surrounding" type="checkbox"> Include surrounding counties</label>
-  </div>
-</div>
-
-<div id="splash" class="splash" onclick="closeSplash()">
-  <div class="splashInner">
-    <div class="splashContent">
-      <div class="splashTitle">ASHTABULA.INFO</div>
-      <div class="splashText">Find food, services, and local places across Ashtabula County.</div>
-      <div class="splashNote">(tap anywhere to continue)</div>
-    </div>
-  </div>
+<div id="splash" class="splash" onclick="this.style.display='none'">
+<div class="splashInner"></div>
 </div>
 
 <script>
-
-/* SPLASH */
-function showSplash(){
-  let last = localStorage.getItem("splashTime");
-  let now = Date.now();
-  if(!last || (now - last) > 9999*1000){
-    splash.style.display="flex";
-    localStorage.setItem("splashTime", now);
-  }
-}
-function closeSplash(){splash.style.display="none";}
-
-/* MAP */
-function mapLink(addr){
-  return /iPhone|iPad|iPod/i.test(navigator.userAgent)
-    ? `http://maps.apple.com/?q=${encodeURIComponent(addr)}`
-    : `https://maps.google.com/?q=${encodeURIComponent(addr)}`;
-}
-
-/* ZIPS unchanged */
-const zips=["44003","44004","44005","44010","44030","44032","44041","44047","44048","44076","44082","44084","44085","44093","44057","44077","44060","44094"];
-let activeZips=[...zips];
-
-function buildZipUI(){
-  zipBox.innerHTML=zips.map(z=>`
-    <label class="zipItem">
-      <input type="checkbox" value="${z}" checked onchange="updateZips()"> ${z}
-    </label>
-  `).join("");
-}
-function updateZips(){activeZips=[...document.querySelectorAll('#zipBox input:checked')].map(x=>x.value);}
-function checkAll(){document.querySelectorAll('#zipBox input').forEach(x=>x.checked=true);updateZips();}
-function clearAll(){document.querySelectorAll('#zipBox input').forEach(x=>x.checked=false);updateZips();}
 
 /* DATA */
 function makePlace(n,c,s,z,co,featured=false){
   return{n,c,s,z,co,p:"440-997-9341",a:`123 Main St, OH ${z}`,w:"https://google.com",featured};
 }
 
-/* your full dataset stays exactly the same, just supports featured */
+const places=[
+makePlace("Pizza Spot","food","pizza","44004","Ashtabula",true),
+makePlace("Slice House","food","pizza","44005","Ashtabula"),
+makePlace("Burger Joint","food","fastfood","44005","Ashtabula"),
+makePlace("Coffee Cafe","food","coffee","44030","Ashtabula"),
 
-/* STRUCTURE unchanged */
-const cats=[["Food","food"],["Fuel","gas"],["Grocery","grocery"],["Outdoors","outdoors"],["Sights","attractions"],["Lodging","lodging"],["Auto","auto"],["Shopping","shopping"],["Services","services"],["Banks","banks"],["Health","health"],["Pets","pets"],["Civic","civic"],["Utilities","utilities"],["Other","other"]];
+makePlace("Car Dealer","auto","sales","44041","Ashtabula"),
+makePlace("Repair Garage","auto","repairs","44004","Ashtabula"),
+makePlace("Car Wash","auto","wash","44005","Ashtabula"),
 
-const foodSubs=["Pizza","Fast Food","Dining","Bars","Coffee","Bakery","Asian","Seafood","Wineries"];
+makePlace("Fuel One","gas",null,"44004","Ashtabula"),
+makePlace("Clinic","health",null,"44004","Ashtabula"),
+makePlace("Pet Clinic","pets",null,"44004","Ashtabula")
+];
+
+/* STRUCTURE */
+const cats=[["Food","food"],["Fuel","gas"],["Health","health"],["Pets","pets"],["Auto","auto"]];
+
+const foodSubs=["Pizza","Fast Food","Coffee"];
 const autoSubs=["Sales","Repairs","Wash"];
 
-/* HOME (jpg fix) */
+/* HOME */
 function renderHome(){
 content.innerHTML=`<div class="grid">${
 cats.map(c=>`
@@ -168,32 +90,50 @@ style="background-image:url('images/categories/${c[1]}.jpg')">
 </div>`).join("")}</div>`;
 }
 
-/* CATEGORY (jpg fix) */
+/* CATEGORY */
 function openCat(cat){
 if(cat==="food"){
+const keyMap={
+"Pizza":"pizza",
+"Fast Food":"fastfood",
+"Coffee":"coffee"
+};
 content.innerHTML=`<div class="grid">${
-foodSubs.map(s=>`
-<div class="tile" onclick="openList('food','${s.toLowerCase().replace(' ','')}')"
-style="background-image:url('images/food/${s.toLowerCase().replace(' ','')}.jpg')">
+foodSubs.map(s=>{
+const key=keyMap[s];
+return `
+<div class="tile" onclick="openList('food','${key}')"
+style="background-image:url('images/food/${key}.jpg')">
 <div class="label">${s}</div>
-</div>`).join("")}</div>`;
+</div>`;
+}).join("")}</div>`;
 return;
 }
+
 if(cat==="auto"){
+const keyMap={
+"Sales":"sales",
+"Repairs":"repairs",
+"Wash":"wash"
+};
 content.innerHTML=`<div class="grid">${
-autoSubs.map(s=>`
-<div class="tile" onclick="openList('auto','${s.toLowerCase()}')"
-style="background-image:url('images/autos/${s.toLowerCase()}.jpg')">
+autoSubs.map(s=>{
+const key=keyMap[s];
+return `
+<div class="tile" onclick="openList('auto','${key}')"
+style="background-image:url('images/autos/${key}.jpg')">
 <div class="label">${s}</div>
-</div>`).join("")}</div>`;
+</div>`;
+}).join("")}</div>`;
 return;
 }
+
 openList(cat);
 }
 
-/* LIST with FEATURED */
+/* LIST */
 function openList(cat,sub){
-let items=places.filter(p=>sub?(p.c===cat&&p.s===sub):p.c===cat).filter(passFilters);
+let items=places.filter(p=>sub?(p.c===cat&&p.s===sub):p.c===cat);
 
 let featured=items.filter(p=>p.featured).sort((a,b)=>a.n.localeCompare(b.n));
 let normal=items.filter(p=>!p.featured).sort((a,b)=>a.n.localeCompare(b.n));
@@ -206,22 +146,15 @@ ${final.map((d,i)=>`
 <div class="item alt${(i%3)+1}">
 <div class="toprow">
 <div>${d.n}${d.featured?" ⭐":""}</div>
-<div><a href="tel:${d.p}">${d.p}</a></div>
+<div>${d.p}</div>
 </div>
-<div class="addr">
-<a href="${mapLink(d.a)}">${d.a}</a>
-</div>
-<div class="web">
-<a href="${d.w}" target="_blank">${d.w}</a>
-</div>
+<div class="addr">${d.a}</div>
+<div class="web">${d.w}</div>
 </div>`).join("")}
 </div>`;
 }
 
-/* INIT */
-buildZipUI();
 renderHome();
-showSplash();
 
 </script>
 
