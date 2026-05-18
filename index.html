@@ -74,7 +74,7 @@ body{
 .list{padding:16px}
 
 .item{
-  background:#ffffffdd;
+  background:#ffffffee;
   border-radius:14px;
   padding:12px;
   margin-bottom:10px;
@@ -89,24 +89,26 @@ body{
 .addr,.web{
   font-size:13px;
   margin-top:4px;
+  word-break:break-all;
 }
 
 /* OPTIONS */
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.5);
+  background:rgba(0,0,0,.6);
   display:none;
   justify-content:center;
   align-items:flex-end;
 }
 
 .panel{
-  background:white;
+  background:#fff;
   width:100%;
   max-width:520px;
   border-radius:20px 20px 0 0;
   padding:20px;
+  color:#000;
 }
 
 /* FOOTER */
@@ -140,57 +142,94 @@ body{
   <div class="panel" onclick="event.stopPropagation()">
     <b>Options</b><br><br>
 
-    Zip filters coming next<br><br>
+    <div><b>Zip Filters (placeholder)</b></div>
+    <label><input type="checkbox" checked> 44004</label><br>
+    <label><input type="checkbox" checked> 44005</label><br>
+    <label><input type="checkbox" checked> 44030</label><br>
+    <label><input type="checkbox" checked> 44041</label><br>
 
+    <br>
+    <label><input type="checkbox"> Include surrounding counties</label>
+
+    <br><br>
     <button onclick="toggleOptions()">Close</button>
   </div>
 </div>
 
 <script>
 
-/* MAP ROUTING */
+/* MAP */
 function mapLink(addr){
-  let isiOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-  return isiOS
+  return /iPhone|iPad|iPod/i.test(navigator.userAgent)
     ? `http://maps.apple.com/?q=${encodeURIComponent(addr)}`
     : `https://maps.google.com/?q=${encodeURIComponent(addr)}`;
 }
 
 /* DATA */
+const basePhone="440-997-9341";
+
+function makePlace(name,cat,sub,zip,county){
+  return {
+    n:name,
+    c:cat,
+    s:sub,
+    p:basePhone,
+    a:`123 Main St, OH ${zip}`,
+    w:`https://google.com`,
+    z:zip,
+    co:county
+  };
+}
+
+/* FULL TEST DATA */
 const places = [
 
-{n:"Harbor Slice",c:"food",s:"pizza",z:"44004",co:"Ashtabula"},
-{n:"Dockside Grill",c:"food",s:"dining",z:"44005",co:"Ashtabula"},
-{n:"Sunrise Donuts",c:"food",s:"donuts",z:"44004",co:"Ashtabula"},
+/* FOOD */
+makePlace("Pizza Spot","food","pizza","44004","Ashtabula"),
+makePlace("Burger Joint","food","fastfood","44005","Ashtabula"),
+makePlace("Seafood Shack","food","seafood","44041","Ashtabula"),
+makePlace("Donut Shop","food","donuts","44004","Ashtabula"),
+makePlace("Wine House","food","wineries","44030","Ashtabula"),
+makePlace("Asian Kitchen","food","asian","44004","Ashtabula"),
 
-{n:"City Auto Repair",c:"auto",s:"repairs",z:"44030",co:"Ashtabula"},
-{n:"Auto Sales Hub",c:"auto",s:"sales",z:"44041",co:"Ashtabula"},
-{n:"Quick Wash",c:"auto",s:"wash",z:"44004",co:"Ashtabula"},
+/* AUTO */
+makePlace("Repair Garage","auto","repairs","44004","Ashtabula"),
+makePlace("Car Dealer","auto","sales","44041","Ashtabula"),
+makePlace("Car Wash","auto","wash","44005","Ashtabula"),
 
-{n:"Fuel Stop",c:"gas",z:"44004",co:"Ashtabula"},
-{n:"Highway Fuel",c:"gas",z:"44057",co:"Lake"},
+/* ALL OTHER CATS */
+makePlace("Fuel One","gas",null,"44004","Ashtabula"),
+makePlace("Fuel Two","gas",null,"44057","Lake"),
 
-{n:"Lakeside Market",c:"grocery",z:"44004",co:"Ashtabula"},
-{n:"County Grocers",c:"grocery",z:"44077",co:"Lake"},
+makePlace("Market One","grocery",null,"44004","Ashtabula"),
+makePlace("Market Two","grocery",null,"44077","Lake"),
 
-{n:"Clinic Center",c:"health",z:"44004",co:"Ashtabula"},
-{n:"Wellness Care",c:"health",z:"44005",co:"Ashtabula"},
+makePlace("Clinic One","health",null,"44004","Ashtabula"),
+makePlace("Clinic Two","health",null,"44005","Ashtabula"),
 
-{n:"Community Bank",c:"banks",z:"44004",co:"Ashtabula"},
+makePlace("Bank One","banks",null,"44004","Ashtabula"),
+makePlace("Bank Two","banks",null,"44005","Ashtabula"),
 
-{n:"City Hall",c:"civic",z:"44004",co:"Ashtabula"},
+makePlace("City Hall","civic",null,"44004","Ashtabula"),
+makePlace("Water Dept","utilities",null,"44004","Ashtabula"),
 
-{n:"Water Department",c:"utilities",z:"44004",co:"Ashtabula"}
+makePlace("Park Trail","outdoors",null,"44004","Ashtabula"),
+makePlace("Lighthouse","attractions",null,"44004","Ashtabula"),
 
-].map(p=>({
-...p,
-p:"440-997-9341",
-a:`123 Main St, OH ${p.z}`,
-w:"https://google.com"
-}));
+makePlace("Hotel One","lodging",null,"44004","Ashtabula"),
 
-/* CATEGORIES */
-const cats = [
+makePlace("Pet Clinic","pets",null,"44004","Ashtabula"),
+
+makePlace("Fix Services","services",null,"44004","Ashtabula"),
+
+makePlace("Shop Center","shopping",null,"44004","Ashtabula"),
+
+makePlace("Other Listing","other",null,"44004","Ashtabula")
+
+];
+
+/* STRUCTURE */
+const cats=[
 ["Food","food"],["Fuel","gas"],["Grocery","grocery"],
 ["Outdoors","outdoors"],["Sights","attractions"],
 ["Lodging","lodging"],["Auto","auto"],["Shopping","shopping"],
@@ -198,45 +237,39 @@ const cats = [
 ["Pets","pets"],["Civic","civic"],["Utilities","utilities"],["Other","other"]
 ];
 
-const foodSubs = ["Asian","Bars","Desserts","Dining","Donuts","FastFood","Pizza","Seafood","Wineries"];
-const autoSubs = ["Sales","Repairs","Wash"];
+const foodSubs=["asian","bars","desserts","dining","donuts","fastfood","pizza","seafood","wineries"];
+const autoSubs=["sales","repairs","wash"];
 
 /* HOME */
 function renderHome(){
-content.innerHTML = `
-<div class="grid">
-${cats.map(c=>`
+content.innerHTML=`<div class="grid">${
+cats.map(c=>`
 <div class="tile" onclick="openCat('${c[1]}')"
 style="background-image:url('images/categories/${c[1]}.png')">
 <div class="label">${c[0]}</div>
-</div>`).join("")}
-</div>`;
+</div>`).join("")}</div>`;
 }
 
 /* CATEGORY */
 function openCat(cat){
 
 if(cat==="food"){
-content.innerHTML = `
-<div class="grid">
-${foodSubs.map(s=>`
-<div class="tile" onclick="openList('food','${s.toLowerCase()}')"
-style="background-image:url('images/food/${s.toLowerCase()}.png')">
+content.innerHTML=`<div class="grid">${
+foodSubs.map(s=>`
+<div class="tile" onclick="openList('food','${s}')"
+style="background-image:url('images/food/${s}.png')">
 <div class="label">${s}</div>
-</div>`).join("")}
-</div>`;
+</div>`).join("")}</div>`;
 return;
 }
 
 if(cat==="auto"){
-content.innerHTML = `
-<div class="grid">
-${autoSubs.map(s=>`
-<div class="tile" onclick="openList('auto','${s.toLowerCase()}')"
-style="background-image:url('images/auto/${s.toLowerCase()}.png')">
+content.innerHTML=`<div class="grid">${
+autoSubs.map(s=>`
+<div class="tile" onclick="openList('auto','${s}')"
+style="background-image:url('images/autos/${s}.png')">
 <div class="label">${s}</div>
-</div>`).join("")}
-</div>`;
+</div>`).join("")}</div>`;
 return;
 }
 
@@ -245,12 +278,9 @@ openList(cat);
 
 /* LIST */
 function openList(cat,sub){
-let data = places.filter(p=>{
-  return sub ? (p.c===cat && p.s===sub) : p.c===cat;
-});
+let data=places.filter(p=>sub?(p.c===cat&&p.s===sub):p.c===cat);
 
-content.innerHTML = `
-<div class="list">
+content.innerHTML=`<div class="list">
 <button onclick="renderHome()">Back</button>
 ${data.map(d=>`
 <div class="item">
@@ -262,38 +292,23 @@ ${data.map(d=>`
 <a href="${mapLink(d.a)}">${d.a}</a>
 </div>
 <div class="web">
-<a href="${d.w}" target="_blank">website</a>
+<a href="${d.w}" target="_blank">${d.w}</a>
 </div>
-</div>
-`).join("")}
+</div>`).join("")}
 </div>`;
 }
 
 /* SEARCH */
-search.oninput = ()=>{
-let q = search.value.toLowerCase();
-let data = places.filter(p=>p.n.toLowerCase().includes(q));
-
-content.innerHTML = `
-<div class="list">
-${data.map(d=>`
-<div class="item">
-<div class="toprow">
-<div>${d.n}</div>
-<div><a href="tel:${d.p}">${d.p}</a></div>
-</div>
-<div class="addr">
-<a href="${mapLink(d.a)}">${d.a}</a>
-</div>
-</div>
-`).join("")}
-</div>`;
+search.oninput=()=>{
+let q=search.value.toLowerCase();
+let data=places.filter(p=>p.n.toLowerCase().includes(q));
+openList("",null,data);
 };
 
 /* OPTIONS */
 let open=false;
 function toggleOptions(){
-options.style.display = open?"none":"flex";
+options.style.display=open?"none":"flex";
 open=!open;
 }
 
