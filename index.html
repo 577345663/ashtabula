@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ashtabula Co.</title>
+<title>Ashtabula</title>
 
 <style>
 body{margin:0;font-family:-apple-system,system-ui,sans-serif;background:linear-gradient(#e6f0ff,#f8fbff);display:flex;justify-content:center}
@@ -64,8 +64,12 @@ function goBack(){
 navStack.pop();
 let prev=navStack[navStack.length-1];
 if(!prev){renderHome();return;}
-if(prev.type==="cat"){openCat(prev.cat);}
-else{openList(prev.cat,prev.sub);}
+if(prev.type==="cat"){renderCat(prev.cat);}
+else{renderList(prev.cat,prev.sub);}
+}
+
+function toggleOptions(){
+options.style.display = options.style.display==="flex"?"none":"flex";
 }
 
 function showSplash(){
@@ -83,80 +87,11 @@ return /iPhone|iPad|iPod/i.test(navigator.userAgent)
 :`https://maps.google.com/?q=${encodeURIComponent(addr)}`;
 }
 
-const zips=["44004","44005","44041","44057","44060"];
-let activeZips=[...zips];
-
-function buildZipUI(){
-zipBox.innerHTML=zips.map(z=>`
-<label class="zipItem">
-<input type="checkbox" value="${z}" checked onchange="updateZips()"> ${z}
-</label>`).join("");
-}
-function updateZips(){
-activeZips=[...document.querySelectorAll('#zipBox input:checked')].map(x=>x.value);
-}
-
 function makePlace(n,c,s,z,co,featured=false){
 return{n,c,s,z,co,p:"440-997-9341",a:`123 Main St, OH ${z}`,w:"https://google.com",featured};
 }
 
-const places=[
-
-makePlace("Pizza Spot","food","pizza","44004","Ashtabula",true),
-makePlace("Slice House","food","pizza","44005","Ashtabula"),
-makePlace("Corner Pizza","food","pizza","44004","Ashtabula",true),
-makePlace("Harbor Slice","food","pizza","44005","Ashtabula",true),
-
-makePlace("Burger Joint","food","fastfood","44005","Ashtabula"),
-makePlace("Speedy Burger","food","fastfood","44004","Ashtabula"),
-
-makePlace("Dining House","food","dining","44041","Ashtabula"),
-makePlace("Dockside Grill","food","dining","44041","Ashtabula",true),
-
-makePlace("Bar Lounge","food","bars","44004","Ashtabula"),
-makePlace("Night Barrel","food","bars","44004","Ashtabula"),
-
-makePlace("Coffee Cafe","food","coffee","44004","Ashtabula"),
-makePlace("Roast House","food","coffee","44005","Ashtabula",true),
-
-makePlace("Bakery Shop","food","bakery","44004","Ashtabula"),
-makePlace("Golden Bakery","food","bakery","44004","Ashtabula"),
-
-makePlace("Asian Kitchen","food","asian","44004","Ashtabula"),
-makePlace("East Wok","food","asian","44005","Ashtabula"),
-
-makePlace("Seafood Shack","food","seafood","44041","Ashtabula"),
-makePlace("Pier Seafood","food","seafood","44041","Ashtabula"),
-
-makePlace("Winery House","food","wineries","44030","Ashtabula"),
-makePlace("Vine Ridge","food","wineries","44030","Ashtabula"),
-
-makePlace("Repair Garage","auto","repairs","44004","Ashtabula",true),
-makePlace("Quick Fix Garage","auto","repairs","44005","Ashtabula",true),
-
-makePlace("Car Dealer","auto","sales","44041","Ashtabula",true),
-makePlace("Elite Auto","auto","sales","44004","Ashtabula",true),
-
-makePlace("Car Wash","auto","wash","44005","Ashtabula"),
-makePlace("Splash Wash","auto","wash","44041","Ashtabula"),
-
-makePlace("Fuel One","gas",null,"44004","Ashtabula",true),
-makePlace("Fuel Two","gas",null,"44057","Lake"),
-makePlace("Fuel Express","gas",null,"44041","Ashtabula",true),
-
-makePlace("Clinic","health",null,"44004","Ashtabula",true),
-makePlace("Family Clinic","health",null,"44005","Ashtabula"),
-
-makePlace("Pet Clinic","pets",null,"44004","Ashtabula"),
-makePlace("Animal House","pets",null,"44005","Ashtabula"),
-
-makePlace("Bank","banks",null,"44004","Ashtabula",true),
-makePlace("Credit Union","banks",null,"44057","Lake"),
-
-makePlace("City Hall","civic",null,"44004","Ashtabula"),
-makePlace("Community Hall","civic",null,"44005","Ashtabula")
-
-];
+const places = window.places;
 
 const cats=[
 ["Food","food"],["Fuel","gas"],["Grocery","grocery"],
@@ -181,6 +116,10 @@ style="background-image:url('images/categories/${c[1]}.jpg')">
 
 function openCat(cat){
 navStack.push({type:"cat",cat});
+renderCat(cat);
+}
+
+function renderCat(cat){
 if(cat==="food"){
 const map={"Pizza":"pizza","Fast Food":"fastfood","Dining":"dining","Bars":"bars","Coffee":"coffee","Bakery":"bakery","Asian":"asian","Seafood":"seafood","Wineries":"wineries"};
 content.innerHTML=`<div class="grid">${
@@ -203,20 +142,23 @@ style="background-image:url('images/autos/${key}.jpg')">
 }).join("")}</div>`;
 return;
 }
-openList(cat);
+renderList(cat);
 }
 
 function openList(cat,sub){
 navStack.push({type:"list",cat,sub});
+renderList(cat,sub);
+}
+
+function renderList(cat,sub){
 let items=places.filter(p=>sub?(p.c===cat&&p.s===sub):p.c===cat);
 
 let featured=items.filter(p=>p.featured).sort((a,b)=>a.n.localeCompare(b.n));
 let normal=items.filter(p=>!p.featured).sort((a,b)=>a.n.localeCompare(b.n));
-
 let final=[...featured,...normal];
 
-content.innerHTML=`<div class="list">
-${final.map((d,i)=>`
+content.innerHTML=`<div class="list">${
+final.map((d,i)=>`
 <div class="item alt${(i%3)+1}">
 <div class="toprow">
 <div>${d.n}${d.featured?" ⭐":""}</div>
@@ -228,7 +170,6 @@ ${final.map((d,i)=>`
 </div>`;
 }
 
-buildZipUI();
 renderHome();
 showSplash();
 
