@@ -4,13 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ashtabula</title>
+<meta name="description" content="Find food, services, and local places across Ashtabula County.">
+<meta name="theme-color" content="#1e4f8a">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚓</text></svg>">
+<meta property="og:title" content="Ashtabula.info">
+<meta property="og:description" content="Find food, services, and local places across Ashtabula County.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ashtabula.info">
+<meta property="og:image" content="https://ashtabula.info/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ashtabula.info">
+<meta name="twitter:description" content="Find food, services, and local places across Ashtabula County.">
+<meta name="twitter:image" content="https://ashtabula.info/preview.png">
 
 <style>
 body{margin:0;font-family:-apple-system,system-ui,sans-serif;background:linear-gradient(#e6f0ff,#f8fbff);display:flex;justify-content:center}
 .app{max-width:520px;width:100%}
 
 .top{padding:16px;display:flex;gap:8px}
-.search{flex:1;height:44px;padding:0 12px;box-sizing:border-box;border-radius:14px;border:none;font-size:16px}
+.search{flex:1;height:44px;padding:0 12px;box-sizing:border-box;border-radius:14px;border:none;font-size:16px;margin-right:4px}
 .btn{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:12px;border:none;background:#1e4f8a;color:#fff}
 
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px}
@@ -384,8 +398,8 @@ ${[...featured,...normal].map((d,i)=>`
 <div>${d.n}${d.featured?" ⭐":""}</div>
 <div><a href="tel:${d.p}">${d.p}</a></div>
 </div>
-<div class="addr"><a href="${mapLink(d.a)}">${d.a}</a></div>
-<div class="web"><a href="${d.w}" target="_blank">${d.w}</a></div>
+<div class="addr"><a href="${mapLink(d.a)}" target="_blank" rel="noopener noreferrer">${d.a}</a></div>
+<div class="web"><a href="${d.w}" target="_blank" rel="noopener noreferrer">${d.w}</a></div>
 </div>`).join("")}
 </div>`;
 }
