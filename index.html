@@ -23,7 +23,7 @@
 body{margin:0;font-family:-apple-system,system-ui,sans-serif;background:linear-gradient(#e6f0ff,#f8fbff);display:flex;justify-content:center}
 .app{max-width:520px;width:100%}
 
-.top{padding:16px;display:flex;gap:8px}
+.top{padding:16px;display:flex;gap:8px;position:sticky;top:0;z-index:20;background:linear-gradient(#e6f0ff,#f8fbff);box-shadow:0 2px 10px rgba(0,0,0,0.06)}
 .search{flex:1;height:44px;padding:0 12px;box-sizing:border-box;border-radius:14px;border:none;font-size:16px;margin-right:4px}
 .btn{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:12px;border:none;background:#1e4f8a;color:#fff}
 
@@ -129,6 +129,12 @@ function mapLink(addr){
     : `https://maps.google.com/?q=${encodeURIComponent(addr)}`;
 }
 
+function shortUrl(url){
+  if(!url)return "";
+  let clean=url.replace(/^https?:\/\//,"").replace(/^www\./,"");
+  return clean.length>32 ? clean.slice(0,32)+"…" : clean;
+}
+
 const zips=[
 "44003","44004","44005","44010","44030",
 "44032","44041","44047","44048","44076",
@@ -160,7 +166,7 @@ function toggleOptions(){
 }
 
 const places = [
-  {
+{
   n:"Assured Real Estate",
   c:"services",
   s:"moving",
@@ -6235,7 +6241,7 @@ const places = [
 {
   n:"Hil-Mak Seafoods",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-964-3222",
@@ -6246,7 +6252,7 @@ const places = [
 {
   n:"Hil-Mak Seafoods Fish Market",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-964-3222",
@@ -6257,7 +6263,7 @@ const places = [
 {
   n:"Rennick Meat Market",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-536-0046",
@@ -6268,7 +6274,7 @@ const places = [
 {
   n:"Harbor Perk Coffeehouse & Roasting Co.",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-964-9277",
@@ -6279,7 +6285,7 @@ const places = [
 {
   n:"Squire Shoppe Bakery",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-964-3303",
@@ -6290,7 +6296,7 @@ const places = [
 {
   n:"Madsen Donuts",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-5884",
@@ -6301,7 +6307,7 @@ const places = [
 {
   n:"Katie's Korner Ice Cream",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-0590",
@@ -6312,7 +6318,7 @@ const places = [
 {
   n:"Pucker Up Candy Shoppe",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-9296",
@@ -6323,7 +6329,7 @@ const places = [
 {
   n:"Frosty Harbor",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-536-5646",
@@ -6334,7 +6340,7 @@ const places = [
 {
   n:"Cone's Ice Cream",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-964-0331",
@@ -6345,7 +6351,7 @@ const places = [
 {
   n:"Iroquois Lounge",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-964-6977",
@@ -6356,7 +6362,7 @@ const places = [
 {
   n:"The Cove Niteclub",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8650",
@@ -6367,7 +6373,7 @@ const places = [
 {
   n:"High Tide Tavern",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-7990",
@@ -6378,7 +6384,7 @@ const places = [
 {
   n:"Brennan's Pub",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-964-3621",
@@ -6389,7 +6395,7 @@ const places = [
 {
   n:"Bum Boat Historic Bar",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-289-8608",
@@ -6400,7 +6406,7 @@ const places = [
 {
   n:"Bridge Street Tavern",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-969-6363",
@@ -6411,7 +6417,7 @@ const places = [
 {
   n:"Fitzgerald's Wine Bar & Gift Shop",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-536-4361",
@@ -6422,7 +6428,7 @@ const places = [
 {
   n:"The Swiss Chalet & Beer Garden",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8650",
@@ -6433,7 +6439,7 @@ const places = [
 {
   n:"Goblin Wine & Ale House",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-2089",
@@ -6444,7 +6450,7 @@ const places = [
 {
   n:"Yankies Bar & Grill",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8888",
@@ -6455,7 +6461,7 @@ const places = [
 {
   n:"Murphy's Pub & Ale House",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-6611",
@@ -6466,7 +6472,7 @@ const places = [
 {
   n:"GOTL Brewing Co.",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-361-4573",
@@ -6477,7 +6483,7 @@ const places = [
 {
   n:"Sportsterz Bar and Grill",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-361-4839",
@@ -6488,7 +6494,7 @@ const places = [
 {
   n:"Game On! Arcade & Sports Pub",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-0015",
@@ -6499,7 +6505,7 @@ const places = [
 {
   n:"Ruff Life on the Lake",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-361-4077",
@@ -6510,7 +6516,7 @@ const places = [
 {
   n:"The Log Cabin Inn",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-3225",
@@ -6521,7 +6527,7 @@ const places = [
 {
   n:"Subway - Harbor Plaza",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-964-7821",
@@ -6532,7 +6538,7 @@ const places = [
 {
   n:"Lakefront Family Restaurant",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-9551",
@@ -6543,7 +6549,7 @@ const places = [
 {
   n:"Pavilion Restaurant",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8668",
@@ -6554,7 +6560,7 @@ const places = [
 {
   n:"Brighter Horizons Family Restaurant",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-536-4088",
@@ -6565,7 +6571,7 @@ const places = [
 {
   n:"Mary's Diner",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-6393",
@@ -6576,7 +6582,7 @@ const places = [
 {
   n:"Bascule Bridge Grille",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-964-0301",
@@ -6587,7 +6593,7 @@ const places = [
 {
   n:"Rennick Meat Market",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-536-0046",
@@ -6598,7 +6604,7 @@ const places = [
 {
   n:"Harbor Halcyon",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-855-1069",
@@ -6609,7 +6615,7 @@ const places = [
 {
   n:"Hil-Mak Seafoods",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-964-3222",
@@ -6620,7 +6626,7 @@ const places = [
 {
   n:"Cloven Hoof Brewing Co.",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-536-4344",
@@ -6631,7 +6637,7 @@ const places = [
 {
   n:"Bridge St. Galley",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"",
@@ -6642,7 +6648,7 @@ const places = [
 {
   n:"Lago Enoteca",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"234-646-2095",
@@ -6653,7 +6659,7 @@ const places = [
 {
   n:"Fitzgerald's Wine Bar",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-536-4361",
@@ -6664,7 +6670,7 @@ const places = [
 {
   n:"Harbor Perk",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-964-9277",
@@ -6675,7 +6681,7 @@ const places = [
 {
   n:"Alessandro's",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"",
@@ -6686,7 +6692,7 @@ const places = [
 {
   n:"Crosswinds Grille at The Lakehouse Inn",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8668",
@@ -6697,7 +6703,7 @@ const places = [
 {
   n:"Old Firehouse Winery",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-9300",
@@ -6708,7 +6714,7 @@ const places = [
 {
   n:"Eddie's Grill",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8720",
@@ -6719,7 +6725,7 @@ const places = [
 {
   n:"Mary's Kitchen",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8606",
@@ -6730,7 +6736,7 @@ const places = [
 {
   n:"Sunrise Cafe",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"",
@@ -6741,7 +6747,7 @@ const places = [
 {
   n:"Piero's Pasta House",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-2520",
@@ -6752,7 +6758,7 @@ const places = [
 {
   n:"Brown's Cheesesteaks",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-2441",
@@ -6763,7 +6769,7 @@ const places = [
 {
   n:"Corner Coffeehouse",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-4333",
@@ -6774,7 +6780,7 @@ const places = [
 {
   n:"Three Sisters Cafe",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-536-6473",
@@ -6785,7 +6791,7 @@ const places = [
 {
   n:"The Loft Restaurant & Lounge",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8191",
@@ -6796,7 +6802,7 @@ const places = [
 {
   n:"Horizon's Restaurant & Lounge",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-7100",
@@ -6807,7 +6813,7 @@ const places = [
 {
   n:"Lakeside Marketplace",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-5500",
@@ -6818,7 +6824,7 @@ const places = [
 {
   n:"East End Bar & Grill",
   c:"gotl",
-  s:null,
+  s:"food",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-7144",
@@ -6829,7 +6835,7 @@ const places = [
 {
   n:"Nights & Weekends Pizzeria",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-964-3300",
@@ -6840,7 +6846,7 @@ const places = [
 {
   n:"Felix Pizza",
   c:"harbor",
-  s:null,
+  s:"food",
   z:"44004",
   co:"Ashtabula",
   p:"440-964-6977",
@@ -6851,7 +6857,7 @@ const places = [
 {
   n:"Geneva State Park Marina",
   c:"gotl",
-  s:null,
+  s:"water",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-7565",
@@ -6862,7 +6868,7 @@ const places = [
 {
   n:"Harbor Gardens General Store and Demonstration Kitchen",
   c:"harbor",
-  s:null,
+  s:"shopping",
   z:"44004",
   co:"Ashtabula",
   p:"440-969-7470",
@@ -6873,7 +6879,7 @@ const places = [
 {
   n:"Phooey Farms",
   c:"harbor",
-  s:null,
+  s:"shopping",
   z:"44004",
   co:"Ashtabula",
   p:"440-265-0020",
@@ -6884,7 +6890,7 @@ const places = [
 {
   n:"Andover Bank - Ashtabula Harbor Banking Center",
   c:"harbor",
-  s:null,
+  s:"shopping",
   z:"44004",
   co:"Ashtabula",
   p:"440-964-8999",
@@ -6895,7 +6901,7 @@ const places = [
 {
   n:"Village of Geneva-on-the-Lake Utilities",
   c:"gotl",
-  s:null,
+  s:"sights",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8197",
@@ -6906,7 +6912,7 @@ const places = [
 {
   n:"Harbor Post Office",
   c:"harbor",
-  s:null,
+  s:"shopping",
   z:"44004",
   co:"Ashtabula",
   p:"1-800-275-8777",
@@ -6917,7 +6923,7 @@ const places = [
 {
   n:"Geneva State Park",
   c:"gotl",
-  s:null,
+  s:"land",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8400",
@@ -6928,7 +6934,7 @@ const places = [
 {
   n:"Harbor Yak Outfitters",
   c:"harbor",
-  s:null,
+  s:"water",
   z:"44004",
   co:"Ashtabula",
   p:"440-990-0161",
@@ -6939,7 +6945,7 @@ const places = [
 {
   n:"Bula Coast Water Sports",
   c:"gotl",
-  s:null,
+  s:"water",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-0333",
@@ -6950,7 +6956,7 @@ const places = [
 {
   n:"Geneva State Park Marina",
   c:"gotl",
-  s:null,
+  s:"water",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-7565",
@@ -6961,7 +6967,7 @@ const places = [
 {
   n:"Breakwater Beach at Geneva State Park",
   c:"gotl",
-  s:null,
+  s:"shore",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8400",
@@ -6972,7 +6978,7 @@ const places = [
 {
   n:"Geneva-on-the-Lake Golf Course",
   c:"gotl",
-  s:null,
+  s:"land",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8797",
@@ -6983,7 +6989,7 @@ const places = [
 {
   n:"Historic Ashtabula Harbor",
   c:"harbor",
-  s:null,
+  s:"sights",
   z:"44004",
   co:"Ashtabula",
   p:"440-789-8726",
@@ -6994,7 +7000,7 @@ const places = [
 {
   n:"Ashtabula Lighthouse Restoration & Preservation Society",
   c:"harbor",
-  s:null,
+  s:"sights",
   z:"44004",
   co:"Ashtabula",
   p:"440-319-4835",
@@ -7005,7 +7011,7 @@ const places = [
 {
   n:"D-Day Ohio WWII Museum",
   c:"harbor",
-  s:null,
+  s:"sights",
   z:"44030",
   co:"Ashtabula",
   p:"440-381-3883",
@@ -7016,7 +7022,7 @@ const places = [
 {
   n:"Ashtabula County Historical Society",
   c:"gotl",
-  s:null,
+  s:"sights",
   z:"44041",
   co:"Ashtabula",
   p:"866-533-3277",
@@ -7027,7 +7033,7 @@ const places = [
 {
   n:"Eerie Harbor Ghost Walk",
   c:"harbor",
-  s:null,
+  s:"sights",
   z:"44004",
   co:"Ashtabula",
   p:"440-228-8458",
@@ -7038,7 +7044,7 @@ const places = [
 {
   n:"Allison's Mini Golf",
   c:"gotl",
-  s:null,
+  s:"sights",
   z:"44041",
   co:"Ashtabula",
   p:"440-812-0604",
@@ -7049,7 +7055,7 @@ const places = [
 {
   n:"Adventure Zone",
   c:"gotl",
-  s:null,
+  s:"sights",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-3555",
@@ -7060,7 +7066,7 @@ const places = [
 {
   n:"Game ON! Arcade & Sports Pub",
   c:"gotl",
-  s:null,
+  s:"sights",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8650",
@@ -7071,7 +7077,7 @@ const places = [
 {
   n:"Sport Center Arcade",
   c:"gotl",
-  s:null,
+  s:"sights",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-1304",
@@ -7082,7 +7088,7 @@ const places = [
 {
   n:"Lake Erie Canopy Tours",
   c:"gotl",
-  s:null,
+  s:"sights",
   z:"44041",
   co:"Ashtabula",
   p:"866-601-1973",
@@ -7093,7 +7099,7 @@ const places = [
 {
   n:"Breakwater Beach at Geneva State Park",
   c:"gotl",
-  s:null,
+  s:"shore",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8400",
@@ -7104,7 +7110,7 @@ const places = [
 {
   n:"The Lodge at Geneva-on-the-Lake",
   c:"gotl",
-  s:null,
+  s:"lodging",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-7100",
@@ -7115,7 +7121,7 @@ const places = [
 {
   n:"The Lakehouse Inn",
   c:"gotl",
-  s:null,
+  s:"lodging",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8668",
@@ -7126,7 +7132,7 @@ const places = [
 {
   n:"The Weekender Motel",
   c:"gotl",
-  s:null,
+  s:"lodging",
   z:"44041",
   co:"Ashtabula",
   p:"440-361-4019",
@@ -7137,7 +7143,7 @@ const places = [
 {
   n:"The Palms Motel",
   c:"gotl",
-  s:null,
+  s:"lodging",
   z:"44041",
   co:"Ashtabula",
   p:"440-361-3251",
@@ -7148,7 +7154,7 @@ const places = [
 {
   n:"Pete’s Lakefront Motel",
   c:"gotl",
-  s:null,
+  s:"lodging",
   z:"44041",
   co:"Ashtabula",
   p:"440-361-3474",
@@ -7159,7 +7165,7 @@ const places = [
 {
   n:"Hideaway Retreat",
   c:"gotl",
-  s:null,
+  s:"lodging",
   z:"44041",
   co:"Ashtabula",
   p:"440-361-3538",
@@ -7170,7 +7176,7 @@ const places = [
 {
   n:"Summertime Inn",
   c:"gotl",
-  s:null,
+  s:"lodging",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8675",
@@ -7181,7 +7187,7 @@ const places = [
 {
   n:"Pause Point Cottage",
   c:"gotl",
-  s:null,
+  s:"lodging",
   z:"44041",
   co:"Ashtabula",
   p:"440-812-4999",
@@ -7192,7 +7198,7 @@ const places = [
 {
   n:"Christopher's Dockside Cottages",
   c:"gotl",
-  s:null,
+  s:"lodging",
   z:"44041",
   co:"Ashtabula",
   p:"724-588-9341",
@@ -7203,7 +7209,7 @@ const places = [
 {
   n:"Drop Anchor Cottages",
   c:"gotl",
-  s:null,
+  s:"lodging",
   z:"44041",
   co:"Ashtabula",
   p:"440-256-6586",
@@ -7214,7 +7220,7 @@ const places = [
 {
   n:"Geneva State Park Campground",
   c:"gotl",
-  s:null,
+  s:"lodging",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-5069",
@@ -7225,7 +7231,7 @@ const places = [
 {
   n:"Sun Retreats Geneva on the Lake",
   c:"gotl",
-  s:null,
+  s:"lodging",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8191",
@@ -7236,7 +7242,7 @@ const places = [
 {
   n:"Harbor Veterinary Clinic",
   c:"harbor",
-  s:null,
+  s:"shopping",
   z:"44004",
   co:"Ashtabula",
   p:"440-969-6060",
@@ -7247,7 +7253,7 @@ const places = [
 {
   n:"Raisian Family Funeral Home and Cremation Services",
   c:"harbor",
-  s:null,
+  s:"shopping",
   z:"44030",
   co:"Ashtabula",
   p:"440-593-2505",
@@ -7258,7 +7264,7 @@ const places = [
 {
   n:"Harbor Freight Tools",
   c:"harbor",
-  s:null,
+  s:"shopping",
   z:"44004",
   co:"Ashtabula",
   p:"440-381-8080",
@@ -7269,7 +7275,7 @@ const places = [
 {
   n:"Bridge Street Art Works",
   c:"harbor",
-  s:null,
+  s:"shopping",
   z:"44004",
   co:"Ashtabula",
   p:"440-206-8399",
@@ -7280,7 +7286,7 @@ const places = [
 {
   n:"The Light Emporium",
   c:"harbor",
-  s:null,
+  s:"shopping",
   z:"44004",
   co:"Ashtabula",
   p:"440-536-4206",
@@ -7291,7 +7297,7 @@ const places = [
 {
   n:"Phooey Farms",
   c:"harbor",
-  s:null,
+  s:"shopping",
   z:"44004",
   co:"Ashtabula",
   p:"440-265-0020",
@@ -7302,7 +7308,7 @@ const places = [
 {
   n:"1032 Tattoo",
   c:"harbor",
-  s:null,
+  s:"shopping",
   z:"44004",
   co:"Ashtabula",
   p:"440-661-8882",
@@ -7313,7 +7319,7 @@ const places = [
 {
   n:"Beachstone Jewelry & Gift Shop",
   c:"gotl",
-  s:null,
+  s:"sights",
   z:"44041",
   co:"Ashtabula",
   p:"440-969-6006",
@@ -7324,7 +7330,7 @@ const places = [
 {
   n:"Whip's Magic Shop",
   c:"gotl",
-  s:null,
+  s:"sights",
   z:"44041",
   co:"Ashtabula",
   p:"440-781-8641",
@@ -7335,7 +7341,7 @@ const places = [
 {
   n:"Mac-An-Sals Boutique",
   c:"gotl",
-  s:null,
+  s:"sights",
   z:"44041",
   co:"Ashtabula",
   p:"440-781-2313",
@@ -7346,7 +7352,7 @@ const places = [
 {
   n:"Gift Shop at The Lodge",
   c:"gotl",
-  s:null,
+  s:"sights",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-7100",
@@ -7357,7 +7363,7 @@ const places = [
 {
   n:"Gallery 29 at Allen's Court",
   c:"gotl",
-  s:null,
+  s:"sights",
   z:"44041",
   co:"Ashtabula",
   p:"610-331-4252",
@@ -7368,7 +7374,7 @@ const places = [
 {
   n:"Krazy K Shirts",
   c:"gotl",
-  s:null,
+  s:"sights",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-7922",
@@ -7376,6 +7382,7 @@ const places = [
   w:"https://visitashtabulacounty.com/find/things-to-do/shopping/page/3/",
   featured:false
 }
+
 
 ];
 
@@ -7414,7 +7421,23 @@ const subcatDefs={
   health:{folder:"health",items:[["Hospital","hospital"],["Clinic","clinic"],["Pharma","pharma"],["Eye","eye"],["Dental","dental"],["Elder","elder"]]},
   pets:{folder:"pets",items:[["Care","care"],["Groom","groom"],["Supply","supply"]]},
   lodging:{folder:"lodging",items:[["Hotel","hotel"],["Cottage","cottage"],["Camp","camp"]]},
-  outdoors:{folder:"outdoors",items:[["Land","land"],["Water","water"],["Shore","shore"]]}
+  outdoors:{folder:"outdoors",items:[["Land","land"],["Water","water"],["Shore","shore"]]},
+  gotl:{folder:"categories",items:[
+    ["Food","food","images/categories/food.jpg"],
+    ["Lodging","lodging","images/categories/lodging.jpg"],
+    ["Sights","sights","images/categories/attractions.jpg"],
+    ["Shore","shore","images/outdoors/shore.jpg"],
+    ["Water","water","images/outdoors/water.jpg"],
+    ["Land","land","images/outdoors/land.jpg"]
+  ]},
+  harbor:{folder:"categories",items:[
+    ["Food","food","images/categories/food.jpg"],
+    ["Shopping","shopping","images/categories/shopping.jpg"],
+    ["Sights","sights","images/categories/attractions.jpg"],
+    ["Lodging","lodging","images/categories/lodging.jpg"],
+    ["Shore","shore","images/outdoors/shore.jpg"],
+    ["Water","water","images/outdoors/water.jpg"]
+  ]}
 };
 
 function passFilters(p){
@@ -7442,7 +7465,8 @@ function openCat(cat){
       def.items.map(s=>{
         let label=s[0];
         let key=s[1];
-        return `<div class="tile" onclick="openList('${cat}','${key}')" style="background-image:url('images/${def.folder}/${key}.jpg')">
+        let img=s[2]||`images/${def.folder}/${key}.jpg`;
+        return `<div class="tile" onclick="openList('${cat}','${key}')" style="background-image:url('${img}')">
 <div class="label">${label}</div>
 </div>`;
       }).join("")}</div>`;
@@ -7482,11 +7506,11 @@ ${matches.map(a=>`
 ${[...featured,...normal].map((d,i)=>`
 <div class="item alt${(i%3)+1}">
 <div class="toprow">
-<div>${d.n}${d.featured?" ⭐":""}</div>
+<div>${d.featured?"⭐ ":""}${d.n}</div>
 <div><a href="tel:${d.p}">${d.p}</a></div>
 </div>
 <div class="addr"><a href="${mapLink(d.a)}" target="_blank" rel="noopener noreferrer">${d.a}</a></div>
-<div class="web"><a href="${d.w}" target="_blank" rel="noopener noreferrer">${d.w}</a></div>
+<div class="web"><a href="${d.w}" target="_blank" rel="noopener noreferrer">${shortUrl(d.w)}</a></div>
 </div>`).join("")}
 </div>`;
 }
