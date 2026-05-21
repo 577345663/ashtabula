@@ -149,6 +149,7 @@ function shortUrl(url){
 const zips=[
   "44003",
   "44004",
+  "44005",
   "44010",
   "44030",
   "44032",
@@ -195,104 +196,104 @@ function toggleOptions(){
 
 const places = [
   {
-  n:"Huntington Bank - Conneaut",
-  c:"banks",
-  s:"banking",
-  z:"44030",
-  co:"Ashtabula",
-  p:"440-593-6954",
-  a:"328 Main St, Conneaut, OH 44030",
-  w:"https://www.huntington.com/Community/cleveland/conneaut-oh-locations",
-  featured:false
-},
-{
-  n:"Huntington Bank - Orwell",
-  c:"banks",
-  s:"banking",
-  z:"44076",
-  co:"Ashtabula",
-  p:"440-437-5181",
-  a:"155 E Main St, Orwell, OH 44076",
-  w:"https://www.huntington.com/Community/cleveland/orwell-oh-locations",
-  featured:false
-},
-{
-  n:"JTA HVAC Inc",
-  c:"services",
-  s:"home",
-  z:"44041",
-  co:"Ashtabula",
-  p:"440-361-3148",
-  a:"805 Pro Gram Pkwy, Geneva, OH 44041",
-  w:"https://jtahvac.com/",
-  featured:false
-},
-{
-  n:"HAVE Heating & Cooling",
-  c:"services",
-  s:"home",
-  z:"44004",
-  co:"Ashtabula",
-  p:"440-998-7252",
-  a:"2101 Aetna Rd, Ashtabula, OH 44004",
-  w:"https://have-inc.com/",
-  featured:false
-},
-{
-  n:"Winner's Circle Trophy Shop",
-  c:"shopping",
-  s:"gift",
-  z:"44041",
-  co:"Ashtabula",
-  p:"440-466-9466",
-  a:"325 S Myers Rd, Geneva, OH 44041",
-  w:"https://www.genevachamber.org/list/member/winner-s-circle-trophy-shop-703",
-  featured:false
-},
-{
-  n:"Winner's Circle Trophy Shop",
-  c:"services",
-  s:"events",
-  z:"44041",
-  co:"Ashtabula",
-  p:"440-466-9466",
-  a:"325 S Myers Rd, Geneva, OH 44041",
-  w:"https://www.genevachamber.org/list/member/winner-s-circle-trophy-shop-703",
-  featured:false
-},
-{
-  n:"Infinity Resources, Inc.",
-  c:"services",
-  s:"pro",
-  z:"44004",
-  co:"Ashtabula",
-  p:"440-998-6515",
-  a:"2608 W Prospect Rd, Ashtabula, OH 44004",
-  w:"https://www.genevachamber.org/list/member/infinity-resources-inc-351",
-  featured:false
-},
-{
-  n:"Covered Bridge Pavilion",
-  c:"services",
-  s:"events",
-  z:"44047",
-  co:"Ashtabula",
-  p:"440-576-3941",
-  a:"Jefferson, OH 44047",
-  w:"https://jeffersonohio.gov/parks/",
-  featured:false
-},
-{
-  n:"Jefferson Streets Department",
-  c:"civic",
-  s:"local",
-  z:"44047",
-  co:"Ashtabula",
-  p:"440-576-6456",
-  a:"27 E Jefferson St, Jefferson, OH 44047",
-  w:"https://jeffersonohio.gov/streets/",
-  featured:false
-},
+    "n": "Huntington Bank - Conneaut",
+    "c": "banks",
+    "s": "banking",
+    "z": "44030",
+    "co": "Ashtabula",
+    "p": "440-593-6954",
+    "a": "328 Main St, Conneaut, OH 44030",
+    "w": "https://www.huntington.com/Community/cleveland/conneaut-oh-locations",
+    "featured": false
+  },
+  {
+    "n": "Huntington Bank - Orwell",
+    "c": "banks",
+    "s": "banking",
+    "z": "44076",
+    "co": "Ashtabula",
+    "p": "440-437-5181",
+    "a": "155 E Main St, Orwell, OH 44076",
+    "w": "https://www.huntington.com/Community/cleveland/orwell-oh-locations",
+    "featured": false
+  },
+  {
+    "n": "JTA HVAC Inc",
+    "c": "services",
+    "s": "home",
+    "z": "44041",
+    "co": "Ashtabula",
+    "p": "440-361-3148",
+    "a": "805 Pro Gram Pkwy, Geneva, OH 44041",
+    "w": "https://jtahvac.com/",
+    "featured": false
+  },
+  {
+    "n": "HAVE Heating & Cooling",
+    "c": "services",
+    "s": "home",
+    "z": "44004",
+    "co": "Ashtabula",
+    "p": "440-998-7252",
+    "a": "2101 Aetna Rd, Ashtabula, OH 44004",
+    "w": "https://have-inc.com/",
+    "featured": false
+  },
+  {
+    "n": "Winner's Circle Trophy Shop",
+    "c": "shopping",
+    "s": "gift",
+    "z": "44041",
+    "co": "Ashtabula",
+    "p": "440-466-9466",
+    "a": "325 S Myers Rd, Geneva, OH 44041",
+    "w": "https://www.genevachamber.org/list/member/winner-s-circle-trophy-shop-703",
+    "featured": false
+  },
+  {
+    "n": "Winner's Circle Trophy Shop",
+    "c": "services",
+    "s": "events",
+    "z": "44041",
+    "co": "Ashtabula",
+    "p": "440-466-9466",
+    "a": "325 S Myers Rd, Geneva, OH 44041",
+    "w": "https://www.genevachamber.org/list/member/winner-s-circle-trophy-shop-703",
+    "featured": false
+  },
+  {
+    "n": "Infinity Resources, Inc.",
+    "c": "services",
+    "s": "pro",
+    "z": "44004",
+    "co": "Ashtabula",
+    "p": "440-998-6515",
+    "a": "2608 W Prospect Rd, Ashtabula, OH 44004",
+    "w": "https://www.genevachamber.org/list/member/infinity-resources-inc-351",
+    "featured": false
+  },
+  {
+    "n": "Covered Bridge Pavilion",
+    "c": "services",
+    "s": "events",
+    "z": "44047",
+    "co": "Ashtabula",
+    "p": "440-576-3941",
+    "a": "Jefferson, OH 44047",
+    "w": "https://jeffersonohio.gov/parks/",
+    "featured": false
+  },
+  {
+    "n": "Jefferson Streets Department",
+    "c": "civic",
+    "s": "local",
+    "z": "44047",
+    "co": "Ashtabula",
+    "p": "440-576-6456",
+    "a": "27 E Jefferson St, Jefferson, OH 44047",
+    "w": "https://jeffersonohio.gov/streets/",
+    "featured": false
+  },
   {
     "n": "Hartsgrove Township",
     "c": "civic",
@@ -4726,7 +4727,7 @@ const places = [
     "w": "https://pueblorealconneaut.com/",
     "featured": false
   },
-   {
+  {
     "n": "Main Moon",
     "c": "food",
     "s": "asian",
@@ -9809,17 +9810,6 @@ const places = [
     "featured": false
   },
   {
-    "n": "Brighter Horizons Family Restaurant",
-    "c": "gotl",
-    "s": "food",
-    "z": "44004",
-    "co": "Ashtabula",
-    "p": "440-536-4088",
-    "a": "Ashtabula, OH 44004",
-    "w": "",
-    "featured": false
-  },
-  {
     "n": "Mary's Diner",
     "c": "gotl",
     "s": "food",
@@ -10097,7 +10087,7 @@ const places = [
   {
     "n": "Andover Bank - Ashtabula Harbor Banking Center",
     "c": "harbor",
-    "s": "shopping",
+    "s": "services",
     "z": "44004",
     "co": "Ashtabula",
     "p": "440-964-8999",
@@ -10119,7 +10109,7 @@ const places = [
   {
     "n": "Harbor Post Office",
     "c": "harbor",
-    "s": "shopping",
+    "s": "services",
     "z": "44004",
     "co": "Ashtabula",
     "p": "1-800-275-8777",
@@ -10191,17 +10181,6 @@ const places = [
     "p": "440-319-4835",
     "a": "Ashtabula Harbor, Ashtabula, OH 44004",
     "w": "https://ashtabulalighthouse.com/",
-    "featured": false
-  },
-  {
-    "n": "D-Day Ohio WWII Museum",
-    "c": "harbor",
-    "s": "sights",
-    "z": "44030",
-    "co": "Ashtabula",
-    "p": "440-381-3883",
-    "a": "851 Harbor St., Conneaut, OH 44030",
-    "w": "https://www.ddayohio.us/",
     "featured": false
   },
   {
@@ -10381,28 +10360,6 @@ const places = [
     "featured": true
   },
   {
-    "n": "Raisian Family Funeral Home and Cremation Services",
-    "c": "harbor",
-    "s": "shopping",
-    "z": "44030",
-    "co": "Ashtabula",
-    "p": "440-593-2505",
-    "a": "581 Harbor St, Conneaut, OH 44030",
-    "w": "https://www.raisianfuneralhome.com/",
-    "featured": false
-  },
-  {
-    "n": "Harbor Freight Tools",
-    "c": "harbor",
-    "s": "shopping",
-    "z": "44004",
-    "co": "Ashtabula",
-    "p": "440-381-8080",
-    "a": "3315 N Ridge Rd E Unit 840, Ashtabula, OH 44004",
-    "w": "https://www.harborfreight.com/storelocator/3315-n-ridge-rd-e-unit-840-ashtabula-44004?number=3355",
-    "featured": false
-  },
-  {
     "n": "Bridge Street Art Works",
     "c": "harbor",
     "s": "shopping",
@@ -10427,7 +10384,7 @@ const places = [
   {
     "n": "Beachstone Jewelry & Gift Shop",
     "c": "gotl",
-    "s": "sights",
+    "s": "shopping",
     "z": "44041",
     "co": "Ashtabula",
     "p": "440-969-6006",
@@ -10438,7 +10395,7 @@ const places = [
   {
     "n": "Mac-An-Sals Boutique",
     "c": "gotl",
-    "s": "sights",
+    "s": "shopping",
     "z": "44041",
     "co": "Ashtabula",
     "p": "440-781-2313",
@@ -10449,7 +10406,7 @@ const places = [
   {
     "n": "Gift Shop at The Lodge",
     "c": "gotl",
-    "s": "sights",
+    "s": "shopping",
     "z": "44041",
     "co": "Ashtabula",
     "p": "440-466-7100",
@@ -10460,7 +10417,7 @@ const places = [
   {
     "n": "Gallery 29 at Allen's Court",
     "c": "gotl",
-    "s": "sights",
+    "s": "shopping",
     "z": "44041",
     "co": "Ashtabula",
     "p": "610-331-4252",
@@ -10471,7 +10428,7 @@ const places = [
   {
     "n": "Krazy K Shirts",
     "c": "gotl",
-    "s": "sights",
+    "s": "shopping",
     "z": "44041",
     "co": "Ashtabula",
     "p": "440-466-7922",
@@ -11021,7 +10978,7 @@ const places = [
   {
     "n": "Morris Flowers & Gifts",
     "c": "shopping",
-    "s": "hardware",
+    "s": "gift",
     "z": "44030",
     "co": "Ashtabula",
     "p": "",
@@ -11215,28 +11172,6 @@ const places = [
     "a": "263 W Prospect Rd, Ashtabula, OH 44004",
     "w": "https://www.ymca.org/locations/ashtabula-county-family-ymca",
     "featured": false
-  },
-  {
-    "n": "Additions, corrections, updates, or removals:",
-    "c": "about",
-    "s": null,
-    "z": "44004",
-    "co": "Ashtabula",
-    "p": "",
-    "a": "",
-    "w": "mailto:admin@ashtabula.info",
-    "featured": true
-  },
-  {
-    "n": "1,192 Directory Listings - Last Updated: 5/20/2026",
-    "c": "about",
-    "s": null,
-    "z": "44004",
-    "co": "Ashtabula",
-    "p": "",
-    "a": "",
-    "w": "",
-    "featured": true
   },
   {
     "n": "Port Conneaut Federal Credit Union - Conneaut",
@@ -12390,7 +12325,7 @@ const places = [
     "co": "Ashtabula",
     "p": "",
     "a": "625 Norman Ave, Ashtabula, OH 44004",
-    "w": "",
+    "w": "https://www.airbnb.com/rooms/48953397",
     "featured": false
   },
   {
@@ -12401,7 +12336,7 @@ const places = [
     "co": "Ashtabula",
     "p": "",
     "a": "625 Norman Ave, Ashtabula, OH 44004",
-    "w": "",
+    "w": "https://www.airbnb.com/rooms/48953397",
     "featured": false
   },
   {
@@ -12412,7 +12347,7 @@ const places = [
     "co": "Ashtabula",
     "p": "",
     "a": "Ashtabula Harbor, Ashtabula, OH 44004",
-    "w": "",
+    "w": "https://www.airbnb.com/rooms/53643912",
     "featured": false
   },
   {
@@ -12423,7 +12358,7 @@ const places = [
     "co": "Ashtabula",
     "p": "",
     "a": "Ashtabula Harbor, Ashtabula, OH 44004",
-    "w": "",
+    "w": "https://www.airbnb.com/rooms/53643912",
     "featured": false
   },
   {
@@ -12434,7 +12369,7 @@ const places = [
     "co": "Ashtabula",
     "p": "",
     "a": "Historic Bridge Street, Ashtabula, OH 44004",
-    "w": "",
+    "w": "https://www.airbnb.com/rooms/17870168",
     "featured": false
   },
   {
@@ -12445,7 +12380,7 @@ const places = [
     "co": "Ashtabula",
     "p": "",
     "a": "Historic Bridge Street, Ashtabula, OH 44004",
-    "w": "",
+    "w": "https://www.airbnb.com/rooms/17870168",
     "featured": false
   },
   {
@@ -12456,7 +12391,7 @@ const places = [
     "co": "Ashtabula",
     "p": "",
     "a": "Walnut Beach area, Ashtabula, OH 44004",
-    "w": "",
+    "w": "https://www.airbnb.com/rooms/776236844407193808",
     "featured": false
   },
   {
@@ -12467,7 +12402,7 @@ const places = [
     "co": "Ashtabula",
     "p": "",
     "a": "Walnut Beach area, Ashtabula, OH 44004",
-    "w": "",
+    "w": "https://www.airbnb.com/rooms/776236844407193808",
     "featured": false
   },
   {
@@ -12478,7 +12413,7 @@ const places = [
     "co": "Ashtabula",
     "p": "",
     "a": "Bridge St, Ashtabula, OH 44004",
-    "w": "",
+    "w": "https://www.airbnb.com/rooms/1156707773101861904",
     "featured": false
   },
   {
@@ -12489,7 +12424,7 @@ const places = [
     "co": "Ashtabula",
     "p": "",
     "a": "Bridge St, Ashtabula, OH 44004",
-    "w": "",
+    "w": "https://www.airbnb.com/rooms/1156707773101861904",
     "featured": false
   },
   {
@@ -12522,7 +12457,7 @@ const places = [
     "co": "Ashtabula",
     "p": "",
     "a": "Walnut Beach area, Ashtabula, OH 44004",
-    "w": "",
+    "w": "https://www.airbnb.com/rooms/47717772",
     "featured": false
   },
   {
@@ -12533,7 +12468,7 @@ const places = [
     "co": "Ashtabula",
     "p": "",
     "a": "Walnut Beach area, Ashtabula, OH 44004",
-    "w": "",
+    "w": "https://www.airbnb.com/rooms/47717772",
     "featured": false
   },
   {
@@ -12544,7 +12479,7 @@ const places = [
     "co": "Ashtabula",
     "p": "",
     "a": "Bridge St, Ashtabula, OH 44004",
-    "w": "",
+    "w": "https://www.airbnb.com/rooms/550393961999094913",
     "featured": false
   },
   {
@@ -12555,7 +12490,7 @@ const places = [
     "co": "Ashtabula",
     "p": "",
     "a": "Bridge St, Ashtabula, OH 44004",
-    "w": "",
+    "w": "https://www.airbnb.com/rooms/550393961999094913",
     "featured": false
   },
   {
@@ -12566,7 +12501,7 @@ const places = [
     "co": "Ashtabula",
     "p": "",
     "a": "Walnut Beach, Ashtabula, OH 44004",
-    "w": "",
+    "w": "https://www.airbnb.com/rooms/787670424368331618",
     "featured": false
   },
   {
@@ -12577,7 +12512,7 @@ const places = [
     "co": "Ashtabula",
     "p": "",
     "a": "Walnut Beach, Ashtabula, OH 44004",
-    "w": "",
+    "w": "https://www.airbnb.com/rooms/787670424368331618",
     "featured": false
   },
   {
@@ -12588,7 +12523,7 @@ const places = [
     "co": "Ashtabula",
     "p": "",
     "a": "Walnut Beach, Ashtabula, OH 44004",
-    "w": "",
+    "w": "https://www.airbnb.com/rooms/1347455590214023194",
     "featured": false
   },
   {
@@ -12599,7 +12534,7 @@ const places = [
     "co": "Ashtabula",
     "p": "",
     "a": "Walnut Beach, Ashtabula, OH 44004",
-    "w": "",
+    "w": "https://www.airbnb.com/rooms/1347455590214023194",
     "featured": false
   },
   {
@@ -13393,6 +13328,28 @@ const places = [
     "a": "1300 Doyle Rd, Jefferson, OH 44047",
     "w": "https://visitashtabulacounty.com/covered-bridges/",
     "featured": false
+  },
+  {
+    "n": "Additions, corrections, updates, or removals:",
+    "c": "about",
+    "s": null,
+    "z": "44004",
+    "co": "Ashtabula",
+    "p": "",
+    "a": "",
+    "w": "mailto:admin@ashtabula.info",
+    "featured": true
+  },
+  {
+    "n": "1,194 Directory Listings - Last Updated: 5/21/2026",
+    "c": "about",
+    "s": null,
+    "z": "44004",
+    "co": "Ashtabula",
+    "p": "",
+    "a": "",
+    "w": "",
+    "featured": true
   }
 ];
 const cats=[
