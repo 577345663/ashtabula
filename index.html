@@ -149,8 +149,9 @@ function shortUrl(url){
 const zips=[
 "44003","44004","44005","44010","44030",
 "44032","44041","44047","44048","44076",
-"44082","44084","44085","44093",
-"44057","44077","44060","44094"
+"44082","44084","44085","44093","44099",
+"44057","44077","44060","44094",
+"44402","44428"
 ];
 let activeZips=[...zips];
 
@@ -654,6 +655,17 @@ const places = [
   n:"Lakeside Marketplace",
   c:"grocery",
   s:"specialty",
+  z:"44041",
+  co:"Ashtabula",
+  p:"440-361-3306",
+  a:"5125 Lake Rd E, Geneva-on-the-Lake, OH 44041",
+  w:"https://www.facebook.com/LakesideMarketplaceGOTL/",
+  featured:false
+},
+{
+  n:"Lakeside Marketplace",
+  c:"wine",
+  s:"shops",
   z:"44041",
   co:"Ashtabula",
   p:"440-361-3306",
@@ -2048,6 +2060,17 @@ const places = [
   featured:false
 },
 {
+  n:"Kent State University at Ashtabula - Wine Degrees & Certificates",
+  c:"wine",
+  s:"learn",
+  z:"44004",
+  co:"Ashtabula",
+  p:"440-964-4217",
+  a:"3300 Lake Rd W, Ashtabula, OH 44004",
+  w:"https://www.kent.edu/ashtabula/wine",
+  featured:false
+},
+{
   n:"Ashtabula Area City Schools",
   c:"civic",
   s:"learning",
@@ -2203,8 +2226,8 @@ const places = [
 },
 {
   n:"Laurello Vineyards",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44041",
   co:"Ashtabula",
   p:"440-415-0661",
@@ -2214,8 +2237,8 @@ const places = [
 },
 {
   n:"M Cellars",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44041",
   co:"Ashtabula",
   p:"440-361-4104",
@@ -2225,8 +2248,8 @@ const places = [
 },
 {
   n:"South River Vineyard",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-6676",
@@ -2236,8 +2259,8 @@ const places = [
 },
 {
   n:"Ferrante Winery & Ristorante",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8466",
@@ -2247,8 +2270,8 @@ const places = [
 },
 {
   n:"Harpersfield Vineyard",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-4739",
@@ -2258,8 +2281,8 @@ const places = [
 },
 {
   n:"The Winery at Spring Hill",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-0626",
@@ -2269,8 +2292,8 @@ const places = [
 },
 {
   n:"Benny Vino Urban Winery",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44041",
   co:"Ashtabula",
   p:"440-361-3049",
@@ -2280,8 +2303,8 @@ const places = [
 },
 {
   n:"Biscotti's Family Winery",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44030",
   co:"Ashtabula",
   p:"440-599-5555",
@@ -2291,8 +2314,8 @@ const places = [
 },
 {
   n:"Buccia Vineyard",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44030",
   co:"Ashtabula",
   p:"440-593-5976",
@@ -2302,8 +2325,8 @@ const places = [
 },
 {
   n:"Deer's Leap Winery",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-1248",
@@ -2313,8 +2336,8 @@ const places = [
 },
 {
   n:"Emerine Estates Winery",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44047",
   co:"Ashtabula",
   p:"440-293-8199",
@@ -2324,8 +2347,8 @@ const places = [
 },
 {
   n:"Debonné Vineyards",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44057",
   co:"Lake",
   p:"440-466-3485",
@@ -2335,8 +2358,8 @@ const places = [
 },
 {
   n:"Laurentia Winery",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44057",
   co:"Lake",
   p:"440-296-9175",
@@ -2577,8 +2600,8 @@ const places = [
 },
 {
   n:"The Stable Winery",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44003",
   co:"Ashtabula",
   p:"440-965-6900",
@@ -3072,8 +3095,8 @@ const places = [
 },
 {
   n:"Lago Cellars Winery & Enoteca",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44004",
   co:"Ashtabula",
   p:"234-646-2095",
@@ -3258,9 +3281,31 @@ const places = [
   featured:false
 },
 {
+  n:"Fitzgerald's Wine Bar & Gift Shop",
+  c:"wine",
+  s:"shops",
+  z:"44004",
+  co:"Ashtabula",
+  p:"440-536-4361",
+  a:"1023 Bridge St, Ashtabula, OH 44004",
+  w:"https://www.facebook.com/fitzgeraldswinebar/",
+  featured:false
+},
+{
   n:"Goddess Wine House",
   c:"food",
   s:"bars",
+  z:"44004",
+  co:"Ashtabula",
+  p:"440-964-9993",
+  a:"3054 W Prospect Rd, Ashtabula, OH 44004",
+  w:"https://mygoddesswinehouse.com/",
+  featured:false
+},
+{
+  n:"Goddess Wine House",
+  c:"wine",
+  s:"shops",
   z:"44004",
   co:"Ashtabula",
   p:"440-964-9993",
@@ -4249,8 +4294,8 @@ const places = [
 },
 {
   n:"Old Firehouse Winery",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-9300",
@@ -4315,8 +4360,8 @@ const places = [
 },
 {
   n:"Grand River Cellars Winery & Restaurant",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44041",
   co:"Ashtabula",
   p:"440-298-9838",
@@ -4326,8 +4371,8 @@ const places = [
 },
 {
   n:"Old Mill Winery",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-5560",
@@ -4337,8 +4382,8 @@ const places = [
 },
 {
   n:"Corkscrew Taphouse Winery + Tasting Bar",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44041",
   co:"Ashtabula",
   p:"440-361-3049",
@@ -4348,8 +4393,8 @@ const places = [
 },
 {
   n:"Harpersfield Vineyards",
-  c:"wineries",
-  s:null,
+  c:"wine",
+  s:"wineries",
   z:"44041",
   co:"Ashtabula",
   p:"",
@@ -4462,9 +4507,9 @@ const places = [
   s:"dining",
   z:"44041",
   co:"Ashtabula",
-  p:"440-466-5500",
+  p:"440-361-3306",
   a:"5125 Lake Rd E, Geneva-on-the-Lake, OH 44041",
-  w:"https://www.lakesidemarketplace.com/",
+  w:"https://www.facebook.com/LakesideMarketplaceGOTL/",
   featured:false
 },
 {
@@ -4602,7 +4647,7 @@ const places = [
 {
   n:"Circle K - Main Ave Ashtabula",
   c:"gas",
-  s:"gasstation",
+  s:"cars",
   z:"44004",
   co:"Ashtabula",
   p:"440-992-0430",
@@ -4613,7 +4658,7 @@ const places = [
 {
   n:"Circle K - Lake Ave Ashtabula",
   c:"gas",
-  s:"gasstation",
+  s:"cars",
   z:"44004",
   co:"Ashtabula",
   p:"440-964-7404",
@@ -4624,7 +4669,7 @@ const places = [
 {
   n:"Shell - Park Ave Ashtabula",
   c:"gas",
-  s:"gasstation",
+  s:"cars",
   z:"44004",
   co:"Ashtabula",
   p:"440-992-4020",
@@ -4635,7 +4680,7 @@ const places = [
 {
   n:"Sheetz - Ashtabula",
   c:"gas",
-  s:"gasstation",
+  s:"cars",
   z:"44004",
   co:"Ashtabula",
   p:"440-536-5010",
@@ -4646,7 +4691,7 @@ const places = [
 {
   n:"Clark - Ashtabula",
   c:"gas",
-  s:"gasstation",
+  s:"cars",
   z:"44004",
   co:"Ashtabula",
   p:"1-800-531-1418",
@@ -4657,7 +4702,7 @@ const places = [
 {
   n:"Gulf - Ashtabula",
   c:"gas",
-  s:"gasstation",
+  s:"cars",
   z:"44004",
   co:"Ashtabula",
   p:"1-800-645-3287",
@@ -4668,7 +4713,7 @@ const places = [
 {
   n:"Speedway - Ashtabula",
   c:"gas",
-  s:"gasstation",
+  s:"cars",
   z:"44004",
   co:"Ashtabula",
   p:"1-800-643-1948",
@@ -4679,7 +4724,7 @@ const places = [
 {
   n:"GetGo - Ashtabula",
   c:"gas",
-  s:"gasstation",
+  s:"cars",
   z:"44004",
   co:"Ashtabula",
   p:"1-800-553-2324",
@@ -4690,7 +4735,7 @@ const places = [
 {
   n:"Circle K - Conneaut",
   c:"gas",
-  s:"gasstation",
+  s:"cars",
   z:"44030",
   co:"Ashtabula",
   p:"1-800-324-8464",
@@ -4701,7 +4746,7 @@ const places = [
 {
   n:"Shell - Conneaut",
   c:"gas",
-  s:"gasstation",
+  s:"cars",
   z:"44030",
   co:"Ashtabula",
   p:"1-888-467-4355",
@@ -4712,7 +4757,7 @@ const places = [
 {
   n:"Northbound Fuel Dock LLC",
   c:"gas",
-  s:"marinafuel",
+  s:"boats",
   z:"44030",
   co:"Ashtabula",
   p:"",
@@ -4723,7 +4768,7 @@ const places = [
 {
   n:"Sunoco - Jefferson",
   c:"gas",
-  s:"gasstation",
+  s:"cars",
   z:"44047",
   co:"Ashtabula",
   p:"440-576-1972",
@@ -4734,7 +4779,7 @@ const places = [
 {
   n:"Sunoco - Geneva",
   c:"gas",
-  s:"gasstation",
+  s:"cars",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-1201",
@@ -4745,7 +4790,7 @@ const places = [
 {
   n:"Circle K - Orwell",
   c:"gas",
-  s:"gasstation",
+  s:"cars",
   z:"44076",
   co:"Ashtabula",
   p:"1-800-324-8464",
@@ -4756,7 +4801,7 @@ const places = [
 {
   n:"True North Shell - Andover",
   c:"gas",
-  s:"gasstation",
+  s:"cars",
   z:"44003",
   co:"Ashtabula",
   p:"440-293-6500",
@@ -4767,7 +4812,7 @@ const places = [
 {
   n:"Flying J Travel Center - Austinburg",
   c:"gas",
-  s:"truckstop",
+  s:"truckers",
   z:"44010",
   co:"Ashtabula",
   p:"440-275-1515",
@@ -4778,7 +4823,7 @@ const places = [
 {
   n:"Pilot Travel Center - Austinburg",
   c:"gas",
-  s:"truckstop",
+  s:"truckers",
   z:"44010",
   co:"Ashtabula",
   p:"440-275-3303",
@@ -4788,8 +4833,8 @@ const places = [
 },
 {
   n:"Melzer's Fuel Service",
-  c:"gas",
-  s:"bulkfuel",
+  c:"utilities",
+  s:"energy",
   z:"44041",
   co:"Ashtabula",
   p:"1-800-367-0203",
@@ -4799,8 +4844,8 @@ const places = [
 },
 {
   n:"Orwell Oil Company",
-  c:"gas",
-  s:"bulkfuel",
+  c:"utilities",
+  s:"energy",
   z:"44076",
   co:"Ashtabula",
   p:"1-800-437-6485",
@@ -4810,8 +4855,8 @@ const places = [
 },
 {
   n:"21st Century Energy Group",
-  c:"gas",
-  s:"bulkfuel",
+  c:"utilities",
+  s:"energy",
   z:"44004",
   co:"Ashtabula",
   p:"1-800-922-5454",
@@ -4821,8 +4866,8 @@ const places = [
 },
 {
   n:"Thrifty Propane - Geneva",
-  c:"gas",
-  s:"propane",
+  c:"utilities",
+  s:"energy",
   z:"44041",
   co:"Ashtabula",
   p:"1-800-879-3152",
@@ -4833,7 +4878,7 @@ const places = [
 {
   n:"Geneva State Park Marina",
   c:"gas",
-  s:"marinafuel",
+  s:"boats",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-7565",
@@ -6316,6 +6361,17 @@ const places = [
   featured:false
 },
 {
+  n:"Riverbend Hotel & Suites",
+  c:"harbor",
+  s:"lodging",
+  z:"44004",
+  co:"Ashtabula",
+  p:"440-553-8500",
+  a:"533 GoodWill Dr., Ashtabula, OH 44004",
+  w:"https://www.theriverbendhotel.com/",
+  featured:false
+},
+{
   n:"Economy Inn & Suites",
   c:"lodging",
   s:"hotel",
@@ -7691,6 +7747,17 @@ const places = [
   featured:false
 },
 {
+  n:"Bum Boat Historic Bar",
+  c:"harbor",
+  s:"water",
+  z:"44004",
+  co:"Ashtabula",
+  p:"440-289-8608",
+  a:"E 6th St, Ashtabula, OH 44004",
+  w:"https://www.restaurantji.com/oh/ashtabula/bum-boat-historic-bar-on-lake-erie-harbor-/",
+  featured:false
+},
+{
   n:"Bridge Street Tavern",
   c:"harbor",
   s:"food",
@@ -8026,9 +8093,9 @@ const places = [
   s:"food",
   z:"44041",
   co:"Ashtabula",
-  p:"440-466-5500",
+  p:"440-361-3306",
   a:"5125 Lake Rd E, Geneva-on-the-Lake, OH 44041",
-  w:"https://www.lakesidemarketplace.com/",
+  w:"https://www.facebook.com/LakesideMarketplaceGOTL/",
   featured:false
 },
 {
@@ -8122,7 +8189,7 @@ const places = [
 {
   n:"Geneva State Park",
   c:"gotl",
-  s:"land",
+  s:"sights",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8400",
@@ -8155,7 +8222,7 @@ const places = [
 {
   n:"Geneva-on-the-Lake Golf Course",
   c:"gotl",
-  s:"land",
+  s:"sights",
   z:"44041",
   co:"Ashtabula",
   p:"440-466-8797",
@@ -9267,11 +9334,12 @@ const cats=[
 ["Lodging","lodging"],["Auto","auto"],["Shopping","shopping"],
 ["Services","services"],["Banks","banks"],["Health","health"],
 ["Pets","pets"],["Civic","civic"],["Utilities","utilities"],
-["Wineries","wineries"],["Harbor","harbor"],["GOTL","gotl"],["About","about"]
+["Wine","wine"],["Harbor","harbor"],["GOTL","gotl"],["About","about"]
 ];
 
 const subcatDefs={
   food:{folder:"food",items:[["Pizza","pizza"],["Fast Food","fastfood"],["Dining","dining"],["Bars","bars"],["Coffee","coffee"],["Bakery","bakery"],["Asian","asian"],["Seafood","seafood"],["Mexican","mexican"]]},
+  gas:{folder:"gas",items:[["Cars","cars"],["Boats","boats"],["Truckers","truckers"]]},
   auto:{folder:"autos",items:[["Sales","sales"],["Repairs","repairs"],["Wash","wash"]]},
   services:{folder:"services",items:[["Home","home"],["Moving","moving"],["Life","life"],["Pro","pro"],["Beauty","beauty"],["Care","care"],["Events","events"],["Tech","tech"],["Funeral","funeral"]]},
   civic:{folder:"civic",items:[["Local","local"],["Learning","learning"],["Post","post"],["Help","help"],["Safety","safety"],["Courts","courts"]]},
@@ -9284,6 +9352,7 @@ const subcatDefs={
   grocery:{folder:"grocery",items:[["Market","market","images/grocery/market.jpg"],["Farm","farm","images/grocery/farm.jpg"],["Specialty","specialty","images/grocery/specialty.jpg"]]},
   banks:{folder:"banks",items:[["Banking","banking","images/banks/banking.jpg"],["ATM","atm","images/banks/atm.jpg"],["Lending","lending","images/banks/lending.jpg"]]},
   utilities:{folder:"utilities",items:[["Energy","energy","images/utilities/energy.jpg"],["Water","water","images/utilities/water.jpg"],["Online","online","images/utilities/online.jpg"]]},
+  wine:{folder:"wine",items:[["Wineries","wineries","images/categories/wine.jpg"],["Shops","shops","images/wine/shops.jpg"],["Learn","learn","images/wine/learn.jpg"]]},
   health:{folder:"health",items:[["Hospital","hospital"],["Clinic","clinic"],["Pharma","pharma"],["Eye","eye"],["Dental","dental"],["Elder","elder"]]},
   pets:{folder:"pets",items:[["Care","care"],["Groom","groom"],["Supply","supply"]]},
   lodging:{folder:"lodging",items:[["Hotel","hotel"],["Cottage","cottage"],["Camp","camp"]]},
@@ -9294,7 +9363,7 @@ const subcatDefs={
     ["Sights","sights","images/categories/sights.jpg"],
     ["Shore","shore","images/outdoors/shore.jpg"],
     ["Water","water","images/outdoors/water.jpg"],
-    ["Land","land","images/outdoors/land.jpg"]
+    ["Shopping","shopping","images/categories/shopping.jpg"]
   ]},
   harbor:{folder:"categories",items:[
     ["Food","food","images/categories/food.jpg"],
