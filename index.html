@@ -40,7 +40,18 @@ body{margin:0;font-family:-apple-system,system-ui,sans-serif;background:linear-g
 .item.announce{background:rgba(255,215,0,0.15)}
 
 .toprow{display:flex;justify-content:space-between;font-weight:600;gap:10px}
-.addr,.web,.announceText{font-size:13px;margin-top:4px;word-break:break-all}
+.addr,.announceText{
+  font-size:13px;
+  margin-top:4px;
+  overflow-wrap:break-word;
+  word-break:normal;
+}
+
+.web{
+  font-size:13px;
+  margin-top:4px;
+  word-break:break-all;
+}
 
 .modal{position:fixed;inset:0;background:#000000cc;display:none;justify-content:center;align-items:flex-end}
 .panel{background:#fff;width:100%;max-width:520px;border-radius:20px 20px 0 0;padding:20px;color:#000;position:relative}
