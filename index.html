@@ -215,7 +215,7 @@ const places = [
     "p": "440-474-0415",
     "a": "5321 State Route 534, Rome, OH 44085",
     "w": "https://www.hartsgrove.org/",
-    "featured": true
+    "featured": false
   },
   {
     "n": "South Central Ambulance District",
@@ -13360,6 +13360,25 @@ const subcatDefs={
   gotl:{folder:"categories",items:[["Food","food","images/categories/food.jpg"],["Lodging","lodging","images/categories/lodging.jpg"],["Sights","sights","images/categories/sights.jpg"],["Shore","shore","images/outdoors/shore.jpg"],["Water","water","images/outdoors/water.jpg"],["Shopping","shopping","images/categories/shopping.jpg"]]},
   harbor:{folder:"categories",items:[["Food","food","images/categories/food.jpg"],["Shopping","shopping","images/categories/shopping.jpg"],["Sights","sights","images/categories/sights.jpg"],["Lodging","lodging","images/categories/lodging.jpg"],["Services","services","images/categories/services.jpg"],["Water","water","images/outdoors/water.jpg"]]}
 };
+
+const announcements=[
+  {active:false,title:"📣 Announcement",text:"Pizza specials this week.",targets:["pizza"]},
+  {active:false,title:"📣 Announcement",text:"Bank holiday hours may vary.",targets:["banks"]},
+  {active:false,title:"📣 Announcement 3",text:"",targets:[""]},
+  {active:false,title:"📣 Announcement 4",text:"",targets:[""]},
+  {active:false,title:"📣 Announcement 5",text:"",targets:[""]},
+  {active:false,title:"📣 Announcement 6",text:"",targets:[""]},
+  {active:false,title:"📣 Announcement 7",text:"",targets:[""]},
+  {active:false,title:"📣 Announcement 8",text:"",targets:[""]},
+  {active:false,title:"📣 Announcement 9",text:"",targets:[""]},
+  {active:false,title:"📣 Announcement 10",text:"",targets:[""]},
+  {active:false,title:"📣 Announcement 11",text:"",targets:[""]},
+  {active:false,title:"📣 Announcement 12",text:"",targets:[""]},
+  {active:false,title:"📣 Announcement 13",text:"",targets:[""]},
+  {active:false,title:"📣 Announcement 14",text:"",targets:[""]},
+  {active:true,title:"⚓ Ashtabula.info",text:"Your fast, mobile-friendly guide for Ashtabula County and the surrounding areas. Built to find everything local with just a few taps. <br><br> 📱 Add us to your Home Screen - iPhone: open ashtabula.info in Safari, tap Share, then Add to Home Screen. Android: open ashtabula.info in Chrome, tap the menu, then Add to Home screen or Install app. <br><br> 📱 External links, phone calls, maps, and emails may open services controlled by other companies. Listings gathered from publicly available information and may change over time. Please verify all details directly before visiting.",targets:["about"]}
+];
+
 function passFilters(p){
   let inZip=activeZips.includes(p.z);
   let includeSur=document.getElementById("surrounding").checked;
@@ -13430,10 +13449,10 @@ ${[...featured,...normal].map((d,i)=>`
 <div class="item alt${(i%3)+1}">
 <div class="toprow">
 <div>${d.featured?"⭐ ":""}${d.n}</div>
-<div><a href="tel:${d.p}">${d.p}</a></div>
+<div>${d.p?`<a href="tel:${d.p}">${d.p}</a>`:""}</div>
 </div>
 <div class="addr"><a href="${mapLink(d.a)}" target="_blank" rel="noopener noreferrer">${d.a}</a></div>
-<div class="web"><a href="${d.w}" target="_blank" rel="noopener noreferrer">${shortUrl(d.w)}</a></div>
+${d.w?`<div class="web"><a href="${d.w}" target="_blank" rel="noopener noreferrer">${shortUrl(d.w)}</a></div>`:""}
 </div>`).join("")}
 </div>`;
 }
